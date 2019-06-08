@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -26,11 +25,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firatnet.wts.R;
+import com.firatnet.wts.adapter.RecyclerAllPostsCardAdapter;
 import com.firatnet.wts.adapter.RecyclerMyPostsCardAdapter;
 import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.classes.StaticMethod;
-import com.firatnet.wts.database.SafetyDbHelper;
-import com.firatnet.wts.entities.Phone;
 import com.firatnet.wts.entities.Post;
 
 import org.json.JSONArray;
@@ -38,22 +36,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.firatnet.wts.classes.JsonTAG.TAG_CREATED_AT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
-import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
-import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO_URL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_UPDATED_AT;
+import static com.firatnet.wts.classes.URLTAG.GET_ALL_POStS_URL;
 import static com.firatnet.wts.classes.URLTAG.GET_STUDENT_POStS_URL;
 
-public class MyPostsActivity extends AppCompatActivity {
+public class BuyActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
@@ -64,11 +59,10 @@ public class MyPostsActivity extends AppCompatActivity {
     Context context;
     private static JSONArray postsJsonArray = null;
     boolean checkfirst = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_posts);
+        setContentView(R.layout.activity_buy);
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(layoutManager);
         context = this;
@@ -76,14 +70,13 @@ public class MyPostsActivity extends AppCompatActivity {
         helper = new PreferenceHelper(context);
         posts = new ArrayList<>();
         if (StaticMethod.ConnectChecked(context)) {
-            GetMYpOSTServer();
+            GetPOSTServer();
 
         } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private void GetMYpOSTServer() {
+    private void GetPOSTServer() {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Waiting ... ");
@@ -91,9 +84,7 @@ public class MyPostsActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        final String id = helper.getSettingValueId();
-
-        StringRequest request = new StringRequest(Request.Method.GET, GET_STUDENT_POStS_URL + id, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, GET_ALL_POStS_URL, new Response.Listener<String>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(String response) {
@@ -121,7 +112,7 @@ public class MyPostsActivity extends AppCompatActivity {
 
                         }
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new RecyclerMyPostsCardAdapter(posts, context, nopost);
+                        adapter = new RecyclerAllPostsCardAdapter(posts, context, nopost);
                         recyclerView.setAdapter(adapter);
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
@@ -178,24 +169,5 @@ public class MyPostsActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(checkfirst)
-        {
-            checkfirst=!checkfirst;
-        }
-        else {
-            if (StaticMethod.ConnectChecked(context)) {
-                posts.clear();
-                GetMYpOSTServer();
-
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }

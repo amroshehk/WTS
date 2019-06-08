@@ -30,7 +30,8 @@ public class BuyOrSellActivity extends AppCompatActivity {
         buy_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(BuyOrSellActivity.this, BuyActivity.class);
+                startActivity(intent);
             }
         });
     }

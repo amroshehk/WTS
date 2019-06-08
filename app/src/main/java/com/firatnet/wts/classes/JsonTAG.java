@@ -25,5 +25,8 @@ public class JsonTAG {
     public static final String TAG_TITLE= "title";
     public static final String TAG_DESCRIPTION= "description";
 
+    public static final String TAG_CREATED_AT= "created_at";
+    public static final String TAG_UPDATED_AT= "updated_at";
+
 
 }

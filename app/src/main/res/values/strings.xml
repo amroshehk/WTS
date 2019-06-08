@@ -49,10 +49,15 @@
     <string name="enter_phone">Enter Phone Number</string>
     <string name="your_phones_list">Your Phones List</string>
     <string name="no_number">No number phone</string>
+    <string name="no_post">No post</string>
     <string name="vr4u">VR4U</string>
     <string name="administator_corner">administator corner</string>
     <string name="no">NO</string>
     <string name="yes">Yes</string>
+    <string name="post_details">Post Details</string>
+    <string name="created_at">Created At</string>
+    <string name="edit">Edit</string>
+    <string name="edit_sell">Edit Sell</string>
     <array name="feedbackselect">
         <item>Select</item>
         <item>App performance</item>

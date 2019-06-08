@@ -3,19 +3,37 @@
     package="com.firatnet.wts">
 
     <application
+        android:name=".app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.MyPostsActivity"></activity>
+        <activity android:name=".activities.SettingActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.MyProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.FeedBackActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.SellActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.BuyOrSellActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.HelpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".phoneauth.VerifyPhoneActivity" />
-        <activity android:name=".phoneauth.PhoneNumberAuthActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".phoneauth.VerifyPhoneActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".phoneauth.PhoneNumberAuthActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

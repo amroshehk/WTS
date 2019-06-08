@@ -1,5 +1,6 @@
 package com.firatnet.wts.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,11 +29,10 @@ import com.android.volley.toolbox.Volley;
 import com.firatnet.wts.R;
 import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.classes.StaticMethod;
-import com.firatnet.wts.entities.Register;
+import com.firatnet.wts.entities.Student;
 import com.firatnet.wts.phoneauth.PhoneNumberAuthActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,16 +40,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.firatnet.wts.classes.JsonTAG.TAG_COUNTRY;
-import static com.firatnet.wts.classes.JsonTAG.TAG_CREATED_AT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DATA;
+import static com.firatnet.wts.classes.JsonTAG.TAG_DEPARTMENT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
+import static com.firatnet.wts.classes.JsonTAG.TAG_FACULTY;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
+import static com.firatnet.wts.classes.JsonTAG.TAG_LEVEL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_NAME;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PASSWORD;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHONE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO_URL;
-import static com.firatnet.wts.classes.JsonTAG.TAG_STATUS;
+import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
+import static com.firatnet.wts.classes.JsonTAG.TAG_SUBJECT;
 import static com.firatnet.wts.classes.URLTAG.LOGIN_URL;
 
 public class LoginActivity extends Activity {
@@ -59,9 +63,9 @@ public class LoginActivity extends Activity {
     private TextView error;
     private Context context;
     private ProgressDialog progressDialog;
-    private static JSONArray jsonArray = null;
+  //  private static JSONArray jsonArray = null;
     public String email, password;
-    String token;
+    //String token;
 
     public PreferenceHelper helper;
 
@@ -107,10 +111,10 @@ public class LoginActivity extends Activity {
 
 
 //                        token = SharedPrefManager.getInstance(context).getDeviceToken();
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("Login Tokrn", msg);
+//                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Log.d("Login Tokrn", msg);
 
-                      LoginServer(email, pw, token);
+                      LoginServer(email, pw);
 
                     } else {
                         Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -134,13 +138,13 @@ public class LoginActivity extends Activity {
 
     private boolean isInputsValid() {
 
-        if ( !isValidEmail(email_et.getText().toString())) {
+        if ( !isValidEmail(Objects.requireNonNull(email_et.getText()).toString())) {
             // nameLayout.setErrorEnabled(true);
             email_et.setError("Please enter correct email");
             return false;
         }
 
-        else if ( !isPasswordValid(pw_signin_et.getText().toString()) ) {
+        else if ( !isPasswordValid(Objects.requireNonNull(pw_signin_et.getText()).toString()) ) {
 
             pw_signin_et.setError("Please enter password");
             return false;
@@ -156,13 +160,12 @@ public class LoginActivity extends Activity {
         return !target.isEmpty();
     }
 
-
     public boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
 
-    private void LoginServer(final String email, final String pw,final  String token) {
+    private void LoginServer(final String email, final String pw) {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Login ... ");
@@ -172,61 +175,44 @@ public class LoginActivity extends Activity {
 
 
         StringRequest request = new StringRequest(Request.Method.POST, LOGIN_URL, new Response.Listener<String>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(String response) {
 
                 try {
                     JSONObject obj = new JSONObject(response);
                     progressDialog.dismiss();
-                    if (obj.getString("message").equals("User logged in successfully")) {
+                    if (obj.getString(TAG_MESSAGE).equals("Student logged in successfully")) {
 
 
-                        obj = obj.getJSONObject(TAG_DATA);
-
-
+                        obj = obj.getJSONObject(TAG_RESULTS);
                         String id = obj.getString(TAG_ID);
                         String name = obj.getString(TAG_NAME);
                         String email = obj.getString(TAG_EMAIL);
-
-                        String created_at = obj.getString(TAG_CREATED_AT);
-                        //String updated_at = obj.getString(TAG_UPDATED_AT);
-
-
                         String phone = obj.getString(TAG_PHONE);
-                        String country = obj.getString(TAG_COUNTRY);
-
-                      //  String generated_id = obj.getString(TAG_GENERATED_ID);
-                        String status = obj.getString(TAG_STATUS);
                         String photo_url = obj.getString(TAG_PHOTO_URL);
+                        String faculty = obj.getString(TAG_FACULTY);
+                        String department = obj.getString(TAG_DEPARTMENT);
+                        String subject = obj.getString(TAG_SUBJECT);
+                        String level = obj.getString(TAG_LEVEL);
 
-                      //  String ip = obj.getString(TAG_IP);
 
-                    //       String default_file = "";
-                    //        if (obj.getString(TAG_DEFAULT_FILE) != null)
-                    //         default_file = obj.getString(TAG_DEFAULT_FILE);
-
-                        Register register=new Register(id,name,email,created_at,phone,country,status,photo_url);
+                        Student student =new Student(id,name,email,phone,photo_url,faculty,department,subject,level);
 
                         helper.setLoginState(true);
-                        helper.saveUser(register);
-
-//                        //30 day
-//                        Long tsLong = System.currentTimeMillis()/1000;//time stamp
-//                        long cuuentTimeexpired=tsLong+(30*24*60*60)+1;//
-//                        helper.setSettingValueLoginDataExpired(Long.toString(cuuentTimeexpired));
-
-                        //       Toast.makeText(getApplicationContext(), "User logged in successfully", Toast.LENGTH_SHORT).show();
+                        helper.saveUser(student);
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        /*intent.putExtra(TAG_EMAIL, email);*/
-                        /*intent.putExtra(TAG_GENERATED_ID, generated_id);
-                         */
                         startActivity(intent);
 
 
-                    } else if (obj.getString("message").equals("Incorrect email or password")) {
-                        error.setText("Incorrect email or password");
+                    } else if (!obj.getBoolean(TAG_ERROR)) {
+                        Toast.makeText(getApplicationContext(),"Incorrect email or password", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Incorrect email or password", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -252,7 +238,7 @@ public class LoginActivity extends Activity {
                 } else if (volleyError instanceof TimeoutError) {
                     message = "Connection TimeOut! Please check your internet connection.";
                 }
-
+                Log.i("TAGvLogin",message);
 //                    String responseBody = new String(volleyError.networkResponse.data, "utf-8");
 //                    JSONObject jsonObject = new JSONObject(responseBody);
                 progressDialog.dismiss();
@@ -267,7 +253,6 @@ public class LoginActivity extends Activity {
                 params.put("Content-Type", "application/json; charset=utf-8");
                 params.put(TAG_EMAIL, email);
                 params.put(TAG_PASSWORD, pw);
-            //    params.put(TAG_API_TOKEN, token);
                 return params;
             }
         };

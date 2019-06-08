@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.FeedBackActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="65sp"
+            android:background="@color/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/feedback"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<Spinner
+    android:id="@+id/select_issue"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    android:entries="@array/feedbackselect"
+    android:layout_marginTop="100dp"
+    android:layout_centerHorizontal="true"
+    />
+        <EditText
+            android:id="@+id/message_btn"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/select_issue"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/message"
+            android:inputType="textMultiLine|text"
+            android:maxLines="5"
+            android:minLines="4"
+            android:paddingStart="15dp"
+            android:paddingEnd="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            tools:ignore="Autofill" />
+        <Button
+            android:id="@+id/help_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/message_btn"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/roundedbutton2"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,15 +2,11 @@ package com.firatnet.wts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -26,23 +22,21 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.firatnet.wts.classes.StaticMethod;
-import com.firatnet.wts.entities.Register;
+import com.firatnet.wts.entities.Student;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import com.firatnet.wts.R;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import com.firatnet.wts.R;
-
-import static com.firatnet.wts.classes.JsonTAG.TAG_API_TOKEN;
-import static com.firatnet.wts.classes.JsonTAG.TAG_COUNTRY;
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_NAME;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PASSWORD;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHONE;
@@ -50,13 +44,12 @@ import static com.firatnet.wts.classes.URLTAG.REGISTER_URL;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private String phonenumber,counterName,ip;
+    private String phonenumber;
     private Context context;
     private TextInputEditText name_et,email_et,pw_signup_et,confpw_signup_et;
     public Button btnSignup;
     private TextView error2;
     private ProgressDialog progressDialog;
-    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,19 +68,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         //get intent Extra
         phonenumber = getIntent().getStringExtra("phonenumber");
-        counterName = getIntent().getStringExtra("counterName");
+        //counterName = getIntent().getStringExtra("counterName");
 
-        //get Ip Address
-        ip=getIpAddress();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String name= name_et.getText().toString();
-                String email= email_et.getText().toString();
-                String pw=  pw_signup_et.getText().toString();
-                String conf_pw=  confpw_signup_et.getText().toString();
+                String name= Objects.requireNonNull(name_et.getText()).toString();
+                String email= Objects.requireNonNull(email_et.getText()).toString();
+                String pw=  Objects.requireNonNull(pw_signup_et.getText()).toString();
+                String conf_pw=  Objects.requireNonNull(confpw_signup_et.getText()).toString();
 
                 String error_m="";
                 if(email.equals("") || name.equals("")||pw.equals("")||conf_pw.equals(""))
@@ -108,14 +99,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (StaticMethod.ConnectChecked(context))
                     {
-                        final Register register=new Register(name,email,phonenumber,counterName);
+                       // final Student student =new Student(name,email,phonenumber,counterName);
+                        final Student student =new Student(name,email,phonenumber);
 
 
                       //  token = SharedPrefManager.getInstance(context).getDeviceToken();
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("RegisterActivity Tokrn", msg);
-                        // Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();
-                        RegisterNewUserServer(register,token);
+                     //   String msg = getString(R.string.msg_token_fmt, token);
+                       // Log.d("RegisterActivity Tokrn", msg);
+                        // Toast.makeText(RegisterActivity.this, msg, ToastENGTH_LONG).show();
+                        RegisterNewUserServer(student);
 
 
                     } else {
@@ -138,19 +130,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("DefaultLocale")
-    public String getIpAddress()  {
 
-        WifiManager wifiMan = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInf = wifiMan.getConnectionInfo();
-        int ipAddress = wifiInf.getIpAddress();
-        return String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
-    }
-
-    private void RegisterNewUserServer(final Register register, final String token) {
+    private void RegisterNewUserServer(final Student student) {
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Register.....");
+        progressDialog.setMessage("Waiting.....");
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -165,12 +149,17 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
                     progressDialog.dismiss();
 
+                    if (obj.getString(TAG_MESSAGE).equals("The student successfully registered")) {
+
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    intent.putExtra("email", register.getEmail());
-                    intent.putExtra("password", register.getPassword());
+                    intent.putExtra("email", student.getEmail());
+                    intent.putExtra("password", student.getPassword());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
+                    } else  {
+                        Toast.makeText(getApplicationContext(),"The student not register", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -219,12 +208,10 @@ public class RegisterActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("Content-Type", "application/json; charset=utf-8");
-                params.put(TAG_NAME, register.getName());
-                params.put(TAG_EMAIL, register.getEmail());
-                params.put(TAG_PHONE, register.getPhone());
-                params.put(TAG_COUNTRY, register.getCountry());
-                params.put(TAG_PASSWORD, register.getPassword());
-                params.put(TAG_API_TOKEN, token);
+                params.put(TAG_NAME, student.getName());
+                params.put(TAG_EMAIL, student.getEmail());
+                params.put(TAG_PHONE, student.getPhone());
+                params.put(TAG_PASSWORD, student.getPassword());
 
                 return params;
 

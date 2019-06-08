@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.HelpActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="65sp"
+            android:background="@color/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:text="@string/sell"
+                android:gravity="center"
+                android:textColor="@color/white"/>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <EditText
+            android:id="@+id/title_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            android:hint="@string/title"
+            android:paddingStart="15dp"
+            android:paddingEnd="10dp"
+            tools:ignore="Autofill"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/description_et"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/title_et"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/description"
+            android:inputType="textMultiLine|text"
+            android:maxLines="5"
+            android:minLines="4"
+            android:paddingStart="15dp"
+            android:paddingEnd="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            tools:ignore="Autofill" />
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:text="@string/add"
+            android:background="@drawable/roundedbutton2"
+            android:layout_below="@+id/description_et"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            />
+        <TextView
+            android:id="@+id/error2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_btn"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textColor="@color/colorError" />
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

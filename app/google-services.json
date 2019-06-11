@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "891322427318",
+    "firebase_url": "https://wtsfirebaseproject-25d63.firebaseio.com",
+    "project_id": "wtsfirebaseproject-25d63",
+    "storage_bucket": "wtsfirebaseproject-25d63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891322427318:android:483405753bdc5a64",
+        "android_client_info": {
+          "package_name": "com.firatnet.wts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891322427318-b1kn1bcrdqkr5ae6v1rte9hc4dhn3lol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.firatnet.wts",
+            "certificate_hash": "4978f39f1dbd5c89397873d0e071b14c9e37aa5b"
+          }
+        },
+        {
+          "client_id": "891322427318-27ks8e88m6vbkgf9gimjj5o1m6aitvlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrWsqLakC-i1MTjK0E2HGaqU9B5PQ7xEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891322427318-27ks8e88m6vbkgf9gimjj5o1m6aitvlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

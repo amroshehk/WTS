@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.firatnet.wts.R;
 import com.firatnet.wts.adapter.RecyclerNumbersCardAdapter;
+import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.database.SafetyDbHelper;
 import com.firatnet.wts.entities.Phone;
 
@@ -27,10 +28,11 @@ public class SettingActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
    public TextView nonumber;
 
-    EditText phone_no_et;
-    Button add_btn;
+    EditText phone_no_et,message_et;
+    Button add_btn,save_btn;
     ArrayList<Phone> phones;
     Context context;
+    PreferenceHelper helper;
 //    public Dialog dialog2;
 //    public Button cancel;
 //    public Button ensure;
@@ -43,9 +45,12 @@ public class SettingActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         nonumber = findViewById(R.id.nonumber);
         phone_no_et = findViewById(R.id.phone_no_et);
+        message_et = findViewById(R.id.message_et);
         add_btn = findViewById(R.id.add_btn);
+        save_btn = findViewById(R.id.save_btn);
         context = this;
         layoutManager = new LinearLayoutManager(context);
+        helper=new PreferenceHelper(context);
 
 
         final SafetyDbHelper dh = new SafetyDbHelper(context);
@@ -115,6 +120,23 @@ public class SettingActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+        message_et.setText(helper.getSettingValueMessage());
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+
+                if(!message_et.getText().toString().equals(""))
+                {
+                    helper.saveMessage(message_et.getText().toString());
+                    Toast.makeText(context,"Saving message",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(context,"please enter message",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

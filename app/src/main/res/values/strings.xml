@@ -58,6 +58,8 @@
     <string name="created_at">Created At</string>
     <string name="edit">Edit</string>
     <string name="edit_sell">Edit Sell</string>
+    <string name="your_message">Your message</string>
+    <string name="save">Save</string>
     <array name="feedbackselect">
         <item>Select</item>
         <item>App performance</item>

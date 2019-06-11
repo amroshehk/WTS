@@ -29,6 +29,8 @@ public class PreferenceHelper {
 
     private static String SETTING_KEY_LOGIN_STATE = "com.firatnet.wts.SETTING_KEY_LOGIN_STATE";
 
+    private static String SETTING_KEY_MESSAGE= "com.firatnet.wts.SETTING_KEY_MESSAGE";
+
     public static String SETTING_VALUE_ID = "";
     public static String SETTING_VALUE_NAME = "";
     public static String SETTING_VALUE_EMAIL = "";
@@ -53,6 +55,12 @@ public class PreferenceHelper {
     }
     public String getSettingValuePhotoUrl() {
         return readSharedPreference(KEY, SETTING_KEY_PHOTO_URL);
+    }
+
+    public String getSettingValueMessage() {
+        if(readSharedPreference(KEY, SETTING_KEY_MESSAGE).equals(""))
+            return "Please Help Me!!!!!! I need your help";
+        return readSharedPreference(KEY, SETTING_KEY_MESSAGE);
     }
 
     public String getSettingValueName() {
@@ -144,6 +152,10 @@ public class PreferenceHelper {
 
     }
 
+    public void saveMessage(String message)
+    {
+        writeSharedPreference(message, KEY, SETTING_KEY_MESSAGE);
+    }
 //    public void editUser(Student register) {
 //
 //        writeSharedPreference(register.getName(), KEY, SETTING_KEY_NAME);

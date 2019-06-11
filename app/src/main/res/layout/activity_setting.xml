@@ -100,6 +100,47 @@
             android:text="@string/no_number"
             android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nonumber"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:text="@string/your_message"/>
+        <EditText
+            android:id="@+id/message_et"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/text3"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/message"
+            android:inputType="number|phone"
+            android:maxLines="5"
+            android:minLines="4"
+            android:paddingStart="15dp"
+            android:paddingEnd="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            tools:ignore="Autofill,TextFields" />
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/message_et"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/roundedbutton2"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
     </RelativeLayout>
 
 

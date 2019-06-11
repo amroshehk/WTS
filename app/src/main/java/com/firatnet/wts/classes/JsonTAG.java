@@ -15,6 +15,7 @@ public class JsonTAG {
     public static final String TAG_EMAIL= "email";
     public static final String TAG_PHONE="phone_no";
     public static final String TAG_PHOTO_URL="photo_url";
+    public static final String TAG_PHOTO="photo";
     public static final String TAG_FACULTY="faculty";
     public static final String TAG_DEPARTMENT="department";
     public static final String TAG_SUBJECT="subject";

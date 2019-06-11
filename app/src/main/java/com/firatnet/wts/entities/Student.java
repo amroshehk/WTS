@@ -42,6 +42,19 @@ public class Student {
         this.level = level;
     }
 
+    public Student(String id, String name, String email, String phone,
+                   String faculty, String department, String subject, String level) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.photo_url = photo_url;
+        this.faculty = faculty;
+        this.department = department;
+        this.subject = subject;
+        this.level = level;
+    }
+
     public Student(String name, String email, String phone) {
         this.name = name;
         this.email = email;

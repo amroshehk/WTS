@@ -22,10 +22,10 @@ public class PreferenceHelper {
     private static String SETTING_KEY_PHONE = "com.firatnet.wts.SETTING_KEY_PHONE";
     private static String SETTING_KEY_PHOTO_URL = "com.firatnet.wts.SETTING_KEY_PHOTO_URL";
 
-    private static String SETTING_KEY_FACULTY = "com.firatnet.wts.SETTING_KEY_PHOTO_URL";
-    private static String SETTING_KEY_DEPARTMENT = "com.firatnet.wts.SETTING_KEY_PHOTO_URL";
-    private static String SETTING_KEY_SUBJECT = "com.firatnet.wts.SETTING_KEY_PHOTO_URL";
-    private static String SETTING_KEY_LEVEL = "com.firatnet.wts.SETTING_KEY_PHOTO_URL";
+    private static String SETTING_KEY_FACULTY = "com.firatnet.wts.SETTING_KEY_FACULTY";
+    private static String SETTING_KEY_DEPARTMENT = "com.firatnet.wts.SETTING_KEY_DEPARTMENT";
+    private static String SETTING_KEY_SUBJECT = "com.firatnet.wts.SETTING_KEY_SUBJECT";
+    private static String SETTING_KEY_LEVEL = "com.firatnet.wts.SETTING_KEY_LEVEL";
 
     private static String SETTING_KEY_LOGIN_STATE = "com.firatnet.wts.SETTING_KEY_LOGIN_STATE";
 
@@ -67,6 +67,40 @@ public class PreferenceHelper {
         return readSharedPreference(KEY, SETTING_KEY_NAME);
     }
 
+    public String getSettingValuePhone() {
+        if(readSharedPreference(KEY, SETTING_KEY_PHONE).equals(""))
+            return "";
+        return readSharedPreference(KEY, SETTING_KEY_PHONE);
+    }
+
+    public String getSettingValueFaculty() {
+        if(readSharedPreference(KEY, SETTING_KEY_FACULTY).equals(""))
+            return "";
+        return readSharedPreference(KEY, SETTING_KEY_FACULTY);
+    }
+
+    public String getSettingValueDepartment() {
+        if(readSharedPreference(KEY, SETTING_KEY_DEPARTMENT).equals(""))
+            return "";
+        return readSharedPreference(KEY, SETTING_KEY_DEPARTMENT);
+    }
+
+    public String getSettingValueSubject() {
+        if(readSharedPreference(KEY, SETTING_KEY_SUBJECT).equals(""))
+            return "";
+        return readSharedPreference(KEY, SETTING_KEY_SUBJECT);
+    }
+
+    public String getSettingValueLevel() {
+        if(readSharedPreference(KEY, SETTING_KEY_LEVEL).equals(""))
+            return "";
+        return readSharedPreference(KEY, SETTING_KEY_LEVEL);
+    }
+
+    public void setSettingValuePhotoUrl(String photo_url) {
+
+        writeSharedPreference(photo_url, KEY, SETTING_KEY_PHOTO_URL);
+    }
 
     /**
      * Returns a value saved in SharedPreference

@@ -60,6 +60,13 @@
     <string name="edit_sell">Edit Sell</string>
     <string name="your_message">Your message</string>
     <string name="save">Save</string>
+    <string name="phone">Phone*</string>
+    <string name="faculty">Faculty</string>
+    <string name="level">Level</string>
+    <string name="subject">Subject</string>
+    <string name="department">Department</string>
+    <string name="my_profile">My profile</string>
+    <string name="browse">Browse</string>
     <array name="feedbackselect">
         <item>Select</item>
         <item>App performance</item>

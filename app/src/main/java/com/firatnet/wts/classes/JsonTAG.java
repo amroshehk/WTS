@@ -20,6 +20,8 @@ public class JsonTAG {
     public static final String TAG_SUBJECT="subject";
     public static final String TAG_LEVEL="level";
     public static final String TAG_PASSWORD= "password";
+    public static final String TAG_ISSUE="issue";
+    public static final String TAG_STUDENT_ID= "student_id";
 
 
     public static final String TAG_TITLE= "title";

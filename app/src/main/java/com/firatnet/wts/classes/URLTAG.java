@@ -10,4 +10,6 @@ public class URLTAG {
     public static final String EDIT_POSt_URL ="http://safety.fhn-emarketing.com/api/edit_post";
     public static final String DELETE_POSt_URL ="http://safety.fhn-emarketing.com/api/delete_post";
 
+ public static final String ADD_FEEDBACK_URL ="http://safety.fhn-emarketing.com/api/add_feedback";
+
 }

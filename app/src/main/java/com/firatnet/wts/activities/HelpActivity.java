@@ -26,7 +26,7 @@ public class HelpActivity extends AppCompatActivity {
         SafetyDbHelper helper = new SafetyDbHelper(getApplicationContext());
         final ArrayList<Phone> phones = helper.getAllPhones();
 
-        Button help_btn = findViewById(R.id.help_btn);
+        Button help_btn = findViewById(R.id.send);
         help_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

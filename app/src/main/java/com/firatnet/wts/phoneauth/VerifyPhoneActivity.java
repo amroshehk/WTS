@@ -3,6 +3,7 @@ package com.firatnet.wts.phoneauth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,14 +32,14 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     private EditText editText;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_phone);
 
         mAuth = FirebaseAuth.getInstance();
-
+        context=this;
         progressBar = findViewById(R.id.progressbar);
         editText = findViewById(R.id.editTextCode);
 
@@ -66,8 +67,14 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     }
 
     private void verifyCode(String code) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        signInWithCredential(credential);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            signInWithCredential(credential);
+        }
+        catch (IllegalArgumentException e)
+        {
+            Toast.makeText(context,"Please Check from your Number phone and Country",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {

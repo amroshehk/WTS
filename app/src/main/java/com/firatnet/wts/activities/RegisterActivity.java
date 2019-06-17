@@ -35,11 +35,16 @@ import com.firatnet.wts.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.firatnet.wts.classes.JsonTAG.TAG_DEPARTMENT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_FACULTY;
+import static com.firatnet.wts.classes.JsonTAG.TAG_LEVEL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_NAME;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PASSWORD;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHONE;
+import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO_URL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_SUBJECT;
 import static com.firatnet.wts.classes.URLTAG.REGISTER_URL;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -213,6 +218,11 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put(TAG_EMAIL, student.getEmail());
                 params.put(TAG_PHONE, student.getPhone());
                 params.put(TAG_PASSWORD, student.getPassword());
+//                params.put(TAG_PHOTO_URL, student.getPassword());
+//                params.put(TAG_FACULTY, student.getPassword());
+//                params.put(TAG_DEPARTMENT, student.getPassword());
+//                params.put(TAG_SUBJECT, student.getPassword());
+//                params.put(TAG_LEVEL, student.getPassword());
 
                 return params;
 

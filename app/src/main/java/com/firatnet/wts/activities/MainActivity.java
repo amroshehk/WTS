@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.firatnet.wts.R;
 import com.firatnet.wts.classes.PreferenceHelper;
+import com.firatnet.wts.entities.Student;
 import com.firatnet.wts.phoneauth.PhoneNumberAuthActivity;
 import com.firatnet.wts.phoneauth.VerifyPhoneActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,21 +34,44 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
     public LinearLayout help_line1, buysell_line2, admin_line3;
     public PreferenceHelper helper;
     private CircleImageView photo_nav_header;
     private Context context;
     ImageLoaderConfiguration config;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        try {
+            String email1 = getIntent().getStringExtra("email");
+            String password1 = getIntent().getStringExtra("password");
+
+            Student student = new Student();
+            student.setEmail(email1);
+            student.setPassword(password1);
+
+            helper.setLoginState(true);
+            helper.saveUser(student);
+
+        } catch (Exception ignored) {
+
+        }
+
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         help_line1 = findViewById(R.id.help_line1);
         buysell_line2 = findViewById(R.id.buysell_line2);
         admin_line3 = findViewById(R.id.admin_line3);
         setSupportActionBar(toolbar);
         helper = new PreferenceHelper(getApplicationContext());
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -56,6 +80,7 @@ public class MainActivity extends AppCompatActivity
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
         context=this;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -97,6 +122,10 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+
+
+
     }
 
     @Override

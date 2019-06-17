@@ -61,6 +61,9 @@ public class Student {
         this.phone = phone;
     }
 
+    public Student() {
+    }
+
     public String getId() {
         return id;
     }

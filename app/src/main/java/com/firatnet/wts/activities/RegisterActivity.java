@@ -100,7 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
                     if (StaticMethod.ConnectChecked(context))
                     {
                        // final Student student =new Student(name,email,phonenumber,counterName);
-                        final Student student =new Student(name,email,phonenumber);
+                        final Student student = new Student(name,email,phonenumber);
+                        student.setPassword(pw);
 
 
                       //  token = SharedPrefManager.getInstance(context).getDeviceToken();
@@ -151,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (obj.getString(TAG_MESSAGE).equals("The student successfully registered")) {
 
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     intent.putExtra("email", student.getEmail());
                     intent.putExtra("password", student.getPassword());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

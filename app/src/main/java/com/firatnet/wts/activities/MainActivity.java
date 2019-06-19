@@ -46,13 +46,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+        
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         try {
             String email1 = getIntent().getStringExtra("email");
             String password1 = getIntent().getStringExtra("password");
+            String phone = getIntent().getStringExtra("phone");
+            String name = getIntent().getStringExtra("name");
 
             Student student = new Student();
             student.setEmail(email1);
             student.setPassword(password1);
+            student.setPhone(phone);
+            student.setName(name);
 
             helper.setLoginState(true);
             helper.saveUser(student);
@@ -61,9 +70,6 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         help_line1 = findViewById(R.id.help_line1);

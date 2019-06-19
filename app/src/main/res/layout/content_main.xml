@@ -21,7 +21,7 @@
         <ImageView
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:background="@drawable/help_logo"
+            android:background="@drawable/help_logo2"
             android:contentDescription="@string/todo"/>
 
         <TextView

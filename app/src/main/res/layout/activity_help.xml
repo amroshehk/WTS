@@ -41,7 +41,7 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-            android:background="@drawable/help_logo"
+            android:background="@drawable/help_logo2"
             android:contentDescription="@string/todo" />
 
         <Button

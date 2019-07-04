@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5149C2</color>
+    <color name="colorPrimary">#334A80</color>
     <color name="colorPrimaryDark">#363081</color>
-    <color name="colorAccent">#5149C2</color>
+    <color name="colorAccent">#334A80</color>
     <color name="colorAccentDark2">#363081</color>
     <color name="colorAccentLight">#B5B2D0</color>
 
@@ -22,8 +22,11 @@
     <color name="colorAccentTrans">#a0009688</color>
     <color name="colorBlackTrans">#a0000000</color>
     <color name="colorWhiteTrans">#afffffff</color>
+    <color name="colorWhiteTrans2">#5fffffff</color>
     <color name="colorPrimaryTrans">#a0CBD52D</color>
 
-
+    <color name="btn_color">#193574</color>
     <color name="colorError">#AE132A</color>
+    <color name="gray_bg">#F3F4F4</color>
+    <color name="txt_gray">#727373</color>
 </resources>

@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:layout_gravity="center_vertical"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/background"
     tools:context=".activities.LoginActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:gravity="center">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_thin"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="27sp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="230dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_margin="30dp"
-        android:background="@drawable/logo"
+        android:layout_margin="10dp"
+        android:background="@drawable/user_signup"
         android:contentDescription="@string/login"
         android:scaleType="centerCrop"
         android:visibility="visible" />
@@ -29,9 +43,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:padding="3dp"
         android:foregroundGravity="center_vertical"
         android:gravity="center_vertical"
+        android:background="@drawable/customborder2"
         android:textColorHint="@color/colorPrimaryDark">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -42,11 +59,12 @@
             android:layout_margin="3dp"
             android:background="@android:color/transparent"
             android:foregroundGravity="center"
-            android:gravity="center"
-            android:hint="@string/email"
+            android:hint="@string/email2"
             android:inputType="textEmailAddress"
             android:padding="2dp"
+            android:fontFamily="@font/roboto_thin"
             android:singleLine="true"
+            android:textSize="23sp"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/colorPrimaryDark" />
 
@@ -58,6 +76,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:padding="3dp"
+        android:fontFamily="@font/roboto_thin"
+        android:background="@drawable/customborder2"
         android:textColorHint="@color/colorPrimaryDark"
         app:passwordToggleContentDescription="description"
         app:passwordToggleEnabled="true">
@@ -66,17 +89,17 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pw_signin_et"
             android:layout_width="match_parent"
-            android:layout_height="27dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_margin="3dp"
             android:background="@android:color/transparent"
             android:foregroundGravity="center_vertical"
-            android:gravity="center"
-            android:hint="@string/pass"
-            android:inputType="textPassword"
+            android:hint="@string/pass2"
             android:maxLength="44"
+            android:padding="2dp"
             android:singleLine="true"
+            android:textSize="23sp"
+            android:fontFamily="@font/roboto_thin"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/colorPrimaryDark" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -84,23 +107,28 @@
 
     <Button
         android:id="@+id/btnSignin"
-        android:background="@drawable/roundedbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/roundedbutton"
+        android:fontFamily="@font/roboto_bold"
         android:padding="15dp"
+        android:text="@string/log_in"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:text="@string/login"
-        android:textSize="17sp" />
+        android:textSize="19sp" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/new_to_wts"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_thin"
         android:textSize="24sp" />
 
 
@@ -114,6 +142,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/roundedbutton"
         android:padding="15dp"
+        android:fontFamily="@font/roboto_bold"
         android:text="@string/sign_up"
         android:textColor="@color/white"
         android:textSize="17sp" />
@@ -123,5 +152,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorError" />
+    <TextView
+        android:id="@+id/tandc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/terms_condition"
+        android:gravity="center"
+        android:fontFamily="@font/timeless_normal"
+        android:textSize="16sp"
+        android:textColor="@color/gray_bg" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -106,7 +106,7 @@ public class ImagesViewerActivity extends AppCompatActivity {
         if (!helper.getSettingValuePhotoUrl().isEmpty())
             imageLoader.displayImage(image_url, photoView, options);
         else
-            photoView.setBackgroundResource(R.drawable.user_default);
+            photoView.setBackgroundResource(R.drawable.user_signup);
 
 
         close.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +118,7 @@ public class ImagesViewerActivity extends AppCompatActivity {
 
 
         bitmap = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.user_default);
+                R.drawable.user_signup);
 
         pic.setOnClickListener(new View.OnClickListener() {
             @Override

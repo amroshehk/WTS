@@ -5,14 +5,20 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -56,11 +62,11 @@ import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUBJECT;
 import static com.firatnet.wts.classes.URLTAG.LOGIN_URL;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText email_et, pw_signin_et;
     public Button btnSignin;
-    private TextView error;
+    private TextView error,tandc;
     private Context context;
     private ProgressDialog progressDialog;
   //  private static JSONArray jsonArray = null;
@@ -82,11 +88,17 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+        context=this;
         email_et = findViewById(R.id.email_et);
         pw_signin_et = findViewById(R.id.pw_signin_et);
+        pw_signin_et.setTransformationMethod(new PasswordTransformationMethod());
+
+        Typeface typeface= ResourcesCompat.getFont(context,  R.font.roboto_thin);
+        pw_signin_et.setTypeface(typeface);
+
         btnSignin = findViewById(R.id.btnSignin);
         error = findViewById(R.id.error);
+        tandc = findViewById(R.id.tandc);
         context = this;
 
         try {
@@ -97,7 +109,14 @@ public class LoginActivity extends Activity {
         } catch (Exception ignored) {
 
         }
+        tandc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, TermsConditionActivity.class);
+                startActivity(intent);
 
+            }
+        });
 
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override

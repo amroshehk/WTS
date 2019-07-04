@@ -1,91 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.MainActivity"
-    tools:showIn="@layout/app_bar_main"
-  android:gravity="center">
+  >
 
-    <LinearLayout
-        android:id="@+id/help_line1"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:gravity="center"
-        android:elevation="2dp"
-        android:background="@drawable/customborder"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:background="@drawable/help_logo2"
-            android:contentDescription="@string/todo"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:paddingTop="120dp"
+        android:gravity="center_horizontal">
+        <LinearLayout
+            android:id="@+id/help_line1"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="@string/vr4u" />
-    </LinearLayout>
+            android:elevation="2dp"
+            android:background="@drawable/customborder"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/buysell_line2"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:elevation="2dp"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/customborder"
-        android:layout_toEndOf="@id/help_line1"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/vr4u"
+                android:contentDescription="@string/todo"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:background="@drawable/buy_and_sell"
-            android:contentDescription="@string/todo" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/buysell_line2"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            android:elevation="2dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/customborder"
+            android:layout_toEndOf="@id/help_line1"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="@string/buy_sell" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/admin_line3"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:elevation="2dp"
-        android:layout_below="@+id/help_line1"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/customborder"
-        android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buy_sell"
+                android:contentDescription="@string/todo" />
 
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_gravity="center"
-            android:background="@drawable/admin_corner"
-            android:contentDescription="@string/todo" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="@string/administator_corner" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/admin_line3"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            android:elevation="2dp"
+            android:layout_below="@+id/help_line1"
+            android:layout_marginStart="85dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/customborder"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/message_box"
+                android:contentDescription="@string/todo" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_footer"
+        android:background="@drawable/footer"
+        android:layout_alignParentBottom="true"
+        />
 </RelativeLayout>

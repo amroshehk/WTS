@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorGray2"
+    android:background="@drawable/background"
 
     tools:context=".activities.ImagesViewerActivity">
 
@@ -13,18 +13,17 @@
         android:id="@+id/activity_location_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGray2"
+
         >
 
         <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/photo_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/user_default"
-            android:background="@color/colorGray2"
+            android:padding="50dp"
+            android:src="@drawable/user_signup"
            />
 
         <ImageView
@@ -45,6 +44,10 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_edit" />
+            android:src="@drawable/ic_edit"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:tint="@color/colorPrimary"
+         />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,8 +1,8 @@
 package com.firatnet.wts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -11,15 +11,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,13 +38,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firatnet.wts.R;
-import com.firatnet.wts.adapter.RecyclerMyPostsCardAdapter;
+
 import com.firatnet.wts.classes.GalleryUtil;
 import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.classes.StaticMethod;
-import com.firatnet.wts.entities.Post;
+
 import com.firatnet.wts.entities.Receiver;
-import com.firatnet.wts.entities.Student;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,25 +54,24 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.firatnet.wts.classes.JsonTAG.TAG_CREATED_AT;
-import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
+
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
-import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
+
 import static com.firatnet.wts.classes.JsonTAG.TAG_NAME;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHONE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
-import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
-import static com.firatnet.wts.classes.JsonTAG.TAG_UPDATED_AT;
-import static com.firatnet.wts.classes.URLTAG.GET_ALL_RECEIVERS_URL;
-import static com.firatnet.wts.classes.URLTAG.GET_STUDENT_POStS_URL;
 
-public class AdminCornerActivity extends AppCompatActivity {
+import static com.firatnet.wts.classes.URLTAG.GET_ALL_RECEIVERS_URL;
+
+
+public class AdminCornerActivity extends BaseActivity {
 
     EditText title_et, message_et;
     Spinner spinner;
-    Button send_btn,browse_btn;
+    Button send_btn;
+    ImageButton browse_btn;
     TextView error2;
     private final int GALLERY_ACTIVITY_CODE = 200;
     File file;

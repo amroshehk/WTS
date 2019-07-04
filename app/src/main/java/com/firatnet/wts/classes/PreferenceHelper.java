@@ -27,6 +27,12 @@ public class PreferenceHelper {
     private static String SETTING_KEY_SUBJECT = "com.firatnet.wts.SETTING_KEY_SUBJECT";
     private static String SETTING_KEY_LEVEL = "com.firatnet.wts.SETTING_KEY_LEVEL";
 
+
+    private static String SETTING_KEY_ADDRESS= "com.firatnet.wts.SETTING_KEY_ADDRESS";
+    private static String SETTING_KEY_DESIGNATION= "com.firatnet.wts.SETTING_KEY_DESIGNATION";
+    private static String SETTING_KEY_ID_PROOF_LIST= "com.firatnet.wts.SETTING_KEY_ID_PROOF_LIST";
+    private static String SETTING_KEY_HOSTELER= "com.firatnet.wts.SETTING_KEY_HOSTELER";
+
     private static String SETTING_KEY_LOGIN_STATE = "com.firatnet.wts.SETTING_KEY_LOGIN_STATE";
 
     private static String SETTING_KEY_MESSAGE= "com.firatnet.wts.SETTING_KEY_MESSAGE";

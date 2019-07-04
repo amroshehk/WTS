@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -13,13 +14,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.firatnet.wts.R;
 import com.firatnet.wts.adapter.RecyclerNumbersCardAdapter;
 import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.database.SafetyDbHelper;
 import com.firatnet.wts.entities.Phone;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
+import static com.firatnet.wts.classes.JsonTAG.TAG_NUMBER;
+import static com.firatnet.wts.classes.JsonTAG.TAG_STUDENT_ID;
+import static com.firatnet.wts.classes.URLTAG.ADD_PHONE_URL;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -33,6 +51,7 @@ public class SettingActivity extends AppCompatActivity {
     ArrayList<Phone> phones;
     Context context;
     PreferenceHelper helper;
+    private ProgressDialog progressDialog;
 //    public Dialog dialog2;
 //    public Button cancel;
 //    public Button ensure;
@@ -118,6 +137,8 @@ public class SettingActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                     phone_no_et.setText("");
 
+                    addPhoneNumber(num);
+
                 }
 
             }
@@ -142,10 +163,96 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
+
+    private void addPhoneNumber(final String num) {
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("add new number");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, ADD_PHONE_URL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+
+                    JSONObject obj = new JSONObject(response);
+                    progressDialog.dismiss();
+                    //Toast.makeText(getBaseContext(), "Feedback sent successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, obj.getString(TAG_MESSAGE), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        progressDialog.dismiss();
+
+                        switch (volleyError.networkResponse.statusCode) {
+
+                            case 400:
+                                Toast.makeText(getApplicationContext(),
+                                        "here is validation errors",
+                                        Toast.LENGTH_LONG).show();
+                                break;
+
+                            case 401:
+                                Toast.makeText(getApplicationContext(),
+                                        "here is validation errors",
+                                        Toast.LENGTH_LONG).show();
+                                break;
+
+                            case 402:
+                                Toast.makeText(getApplicationContext(),
+                                        "There is validation errors",
+                                        Toast.LENGTH_LONG).show();
+                                break;
+
+                            case 404:
+                                Toast.makeText(getApplicationContext(),
+                                        "Couldn't reach the server",
+                                        Toast.LENGTH_LONG).show();
+                                break;
+
+                        }
+
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("Content-Type", "application/json; charset=utf-8");
+                params.put(TAG_STUDENT_ID, helper.getSettingValueId());
+                params.put(TAG_NUMBER, num);
+
+
+                return params;
+
+            }
+
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
 //    public void clear() {
 //        phones.clear();
 //        adapter=new RecyclerNumbersCardAdapter(phones,context,nonumber);
 //        recyclerView.setAdapter(adapter);
 //    }
-
+    }
 }

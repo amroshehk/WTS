@@ -12,8 +12,45 @@ public class Student {
     private String subject;
     private String level;
     private String password;
+
+    private String address;
+    private String designation;
+    private String id_proof_list;
+    private String hosteler;
     private String created_at;
     private String updated_at;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getId_proof_list() {
+        return id_proof_list;
+    }
+
+    public void setId_proof_list(String id_proof_list) {
+        this.id_proof_list = id_proof_list;
+    }
+
+    public String getHosteler() {
+        return hosteler;
+    }
+
+    public void setHosteler(String hosteler) {
+        this.hosteler = hosteler;
+    }
 
     public Student(String id, String name, String email, String phone, String photo_url,
                    String faculty, String department, String subject, String level, String password) {

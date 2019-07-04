@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".activities.FeedBackActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,25 +38,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Spinner
-            android:id="@+id/select_issue"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:entries="@array/feedbackselect"
+        <LinearLayout
+            android:id="@+id/select"
             android:layout_marginTop="100dp"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/customborder2">
+            <Spinner
+                android:id="@+id/select_issue"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:entries="@array/feedbackselect"
+
+
+                android:layout_centerHorizontal="true"
+                />
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@+id/select_issue"
+            android:layout_below="@+id/select"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:gravity="start"
             android:hint="@string/message"
+            android:background="@drawable/customborder2"
             android:inputType="textMultiLine|text"
             android:maxLines="5"
             android:minLines="4"
@@ -67,12 +80,14 @@
             tools:ignore="Autofill" />
         <Button
             android:id="@+id/send"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/message"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/roundedbutton2"
+            android:background="@drawable/roundedbutton"
             android:text="@string/send"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/white"
             android:textSize="15sp" />
 

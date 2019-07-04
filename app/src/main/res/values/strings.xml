@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">WTS</string>
     <string name="name">Name *</string>
-    <string name="email">E-Mail *</string>
+    <string name="email">EMail ID*</string>
+    <string name="email2">EMail</string>
     <string name="current_email">Current E-Mail</string>
     <string name="pass">Password *</string>
+    <string name="pass2">Password</string>
     <string name="confpass">Confirm Password *</string>
     <string name="student">Register</string>
     <string name="login">LOGIN</string>
@@ -38,7 +40,7 @@
     <string name="sell">Sell</string>
     <string name="buy_sell">Buy/Sell</string>
     <string name="help">Help</string>
-    <string name="title">Title</string>
+    <string name="title">Subject</string>
     <string name="description">Description</string>
     <string name="add">Add</string>
     <string name="message">Message</string>
@@ -57,16 +59,30 @@
     <string name="post_details">Post Details</string>
     <string name="created_at">Created At</string>
     <string name="edit">Edit</string>
+    <string name="edit2">Confirm</string>
     <string name="edit_sell">Edit Sell</string>
     <string name="your_message">Your message</string>
     <string name="save">Save</string>
     <string name="phone">Phone*</string>
-    <string name="faculty">Faculty</string>
+    <string name="faculty">Faculty/Institute</string>
     <string name="level">Level</string>
     <string name="subject">Subject</string>
     <string name="department">Department</string>
     <string name="my_profile">My profile</string>
     <string name="browse">Browse</string>
+    <string name="emergency_help">Emergency Help</string>
+    <string name="first_aid_help">First  Aid Help</string>
+    <string name="new_message">New Message</string>
+    <string name="to">To</string>
+    <string name="enter_code">enter code</string>
+    <string name="i_sent_you_a_code">I sent you a code, it will be detected automatically but if it is not detected you can put it below manually as well</string>
+    <string name="wait_for_the_code">Wait for the code I sent you...</string>
+    <string name="ag">2019</string>
+    <string name="terms_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="designation">Designation</string>
+    <string name="correspondence_address">Correspondence Address</string>
+    <string name="hosteler">Hosteler</string>
+    <string name="submit">Submit</string>
     <array name="feedbackselect">
         <item>Select</item>
         <item>App performance</item>
@@ -75,5 +91,11 @@
         <item>Incorrect information</item>
         <item>Others</item>
     </array>
-
+    <array name="identityselect">
+        <item>Select Identity Proof</item>
+        <item>Passport</item>
+        <item>Driver\'s License</item>
+        <item>National ID card</item>
+        <item>Other identity documents</item>
+    </array>
 </resources>

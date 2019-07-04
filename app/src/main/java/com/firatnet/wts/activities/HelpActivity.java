@@ -15,7 +15,7 @@ import com.firatnet.wts.entities.Phone;
 
 import java.util.ArrayList;
 
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends BaseActivity {
 
 
     @Override

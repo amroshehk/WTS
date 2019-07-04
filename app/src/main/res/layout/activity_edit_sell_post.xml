@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".activities.HelpActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -42,7 +43,8 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:textColor="@color/colorAccent"
-            android:textSize="25sp"
+            android:background="@drawable/customborder2"
+            android:textSize="22sp"
             android:hint="@string/title"
             android:paddingStart="15dp"
             android:paddingEnd="10dp"
@@ -58,6 +60,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:hint="@string/description"
+            android:background="@drawable/customborder2"
             android:inputType="textMultiLine|text"
             android:maxLines="5"
             android:minLines="4"
@@ -65,25 +68,26 @@
             android:paddingEnd="10dp"
             android:singleLine="true"
             android:textColor="@color/colorAccent"
-            android:textSize="25sp"
+            android:textSize="22sp"
             tools:ignore="Autofill" />
         <Button
             android:id="@+id/edit_btn"
             android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_height="50dp"
             android:text="@string/edit"
-            android:background="@drawable/roundedbutton2"
+            android:background="@drawable/roundedbutton"
             android:layout_below="@+id/description_et"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="15sp"
             />
         <TextView
             android:id="@+id/error2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/add_btn"
+            android:layout_below="@id/edit_btn"
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:textColor="@color/colorError" />

@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.firatnet.wts.R;
 
-public class BuyOrSellActivity extends AppCompatActivity {
+public class BuyOrSellActivity extends BaseActivity {
 
     public Button buy_btn,sell_btn;
     @Override

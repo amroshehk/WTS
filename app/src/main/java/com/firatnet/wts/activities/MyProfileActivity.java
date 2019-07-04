@@ -38,10 +38,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.firatnet.wts.classes.JsonTAG.TAG_ADDRESS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DEPARTMENT;
+import static com.firatnet.wts.classes.JsonTAG.TAG_DESIGNATION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_FACULTY;
+import static com.firatnet.wts.classes.JsonTAG.TAG_HOSTELER;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
+import static com.firatnet.wts.classes.JsonTAG.TAG_ID_PROOF_LIST;
 import static com.firatnet.wts.classes.JsonTAG.TAG_LEVEL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_NAME;
@@ -54,6 +58,7 @@ import static com.firatnet.wts.classes.URLTAG.REGISTER_URL;
 
 public class MyProfileActivity extends AppCompatActivity {
     private TextInputEditText name_et,email_et,phone_et,faculty_et,department_et,subject_et,level_et;
+    private TextInputEditText hosteler_et,designation_et,correspondence_address_et;
     private Context context;
     public Button btnEdit;
     private TextView error2;
@@ -75,6 +80,10 @@ public class MyProfileActivity extends AppCompatActivity {
         department_et=findViewById(R.id.department_et);
         subject_et=findViewById(R.id.subject_et);
         level_et=findViewById(R.id.level_et);
+
+        hosteler_et=findViewById(R.id.hosteler_et);
+        designation_et=findViewById(R.id.designation_et);
+        correspondence_address_et=findViewById(R.id.correspondence_address_et);
 
         btnEdit=findViewById(R.id.btnEdit);
         edit_image=findViewById(R.id.edit_image);
@@ -99,6 +108,10 @@ public class MyProfileActivity extends AppCompatActivity {
                 String subject= Objects.requireNonNull(subject_et.getText()).toString();
                 String level= Objects.requireNonNull(level_et.getText()).toString();
 
+                String hosteler=  Objects.requireNonNull(hosteler_et.getText()).toString();
+                String designation=  Objects.requireNonNull(designation_et.getText()).toString();
+                String address=  Objects.requireNonNull(correspondence_address_et.getText()).toString();
+
 
                 String error_m="";
                 if(email.equals("") || name.equals("")||phone.equals(""))
@@ -120,6 +133,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         final Student student =new Student(helper.getSettingValueId(),name,email,phone,helper.getSettingValuePhotoUrl()
                                 ,faculty,department,subject,level);
+                        student.setAddress(address);
+                        student.setHosteler(hosteler);
+                        student.setDesignation(designation);
 
                        EditProfielUserServer(student);
 
@@ -172,7 +188,7 @@ public class MyProfileActivity extends AppCompatActivity {
         if (!helper.getSettingValuePhotoUrl().isEmpty())
             imageLoader.displayImage(helper.getSettingValuePhotoUrl(), photo, options);
         else
-            photo.setBackgroundResource(R.drawable.user_default);
+            photo.setBackgroundResource(R.drawable.user_signup);
 
     }
     public  boolean isValidEmail(CharSequence target) {
@@ -266,7 +282,9 @@ public class MyProfileActivity extends AppCompatActivity {
                 params.put(TAG_SUBJECT, student.getSubject());
                 params.put(TAG_LEVEL, student.getSubject());
 //                params.put(TAG_PASSWORD, student.getPassword());
-
+                params.put(TAG_DESIGNATION, student.getDesignation());
+                params.put(TAG_ADDRESS, student.getAddress());
+                params.put(TAG_HOSTELER, student.getHosteler());
                 return params;
 
             }

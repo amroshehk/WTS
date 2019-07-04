@@ -4,130 +4,182 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".activities.FeedBackActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--<com.google.android.material.appbar.AppBarLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="65sp"
-            android:background="@color/colorAccent"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+    <!--<androidx.appcompat.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="65sp"-->
+    <!--android:background="@color/colorAccent"-->
+    <!--app:popupTheme="@style/AppTheme.PopupOverlay">-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/administator_corner"
-                android:textColor="@color/white"
-                android:textSize="26sp"
-                android:textStyle="bold" />
-        </androidx.appcompat.widget.Toolbar>
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/administator_corner"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="26sp"-->
+    <!--android:textStyle="bold" />-->
+    <!--</androidx.appcompat.widget.Toolbar>-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+    <!--</com.google.android.material.appbar.AppBarLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="70dp"
+            android:layout_width="170dp"
+            android:layout_height="110dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/admin_corner"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/message_box"
             android:contentDescription="@string/todo" />
 
-        <EditText
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"
-            android:id="@+id/title_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:hint="@string/title"
-            android:inputType="textMultiLine|text"
-            android:paddingStart="15dp"
-            android:paddingEnd="10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="25sp"
-            tools:ignore="Autofill" />
-        <EditText
-            android:id="@+id/message_et"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/title_et"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:hint="@string/message"
-            android:inputType="textMultiLine|text"
-            android:maxLines="5"
-            android:minLines="4"
-            android:paddingStart="15dp"
-            android:paddingEnd="10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="25sp"
-            tools:ignore="Autofill" />
-        <LinearLayout
-            android:id="@+id/line1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@+id/message_et">
-            <Button
-                android:id="@+id/browse_btn"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:background="@drawable/roundedbutton"
-                android:text="@string/browse"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
+            android:layout_margin="10dp"
+            android:elevation="2dp"
+            android:background="@color/gray_bg">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/new_mess"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="25sp"
-                android:text="To"/>
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:entries="@array/feedbackselect"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/txt_gray"
+                android:textSize="18sp"
+                android:text="@string/new_message" />
+            <LinearLayout
+                android:id="@+id/select"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/new_mess"
+                android:background="@drawable/customborder2"
+                android:layout_margin="3dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/to"
+                    android:gravity="center"
+                    android:textColor="@color/txt_gray"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp" />
 
-                />
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/feedbackselect"
 
-        </LinearLayout>
+                    />
+            </LinearLayout>
+            <EditText
+                android:id="@+id/title_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/select"
+                android:layout_margin="3dp"
+                android:hint="@string/title"
+                android:inputType="textMultiLine|text"
+                android:singleLine="true"
+                android:fontFamily="@font/roboto_bold"
+                android:background="@drawable/customborder2"
+                android:textColor="@color/txt_gray"
+                android:textColorHint="@color/txt_gray"
+                android:textSize="16sp"
+                tools:ignore="Autofill" />
+            <EditText
+                android:id="@+id/message_et"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_below="@+id/title_et"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="3dp"
+                android:hint="@string/message"
+                android:background="@drawable/customborder2"
+                android:inputType="textMultiLine|text"
+                android:maxLines="5"
+                android:minLines="4"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent"
+                android:fontFamily="@font/roboto_bold"
+                android:textColorHint="@color/txt_gray"
+                android:textSize="16sp"
+                tools:ignore="Autofill" />
+            <TextView
+                android:id="@+id/error2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/message_et"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:textColor="@color/colorError" />
+            <LinearLayout
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/error2"
 
-        <Button
-            android:id="@+id/send_btn"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_below="@+id/line1"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/roundedbutton2"
-            android:text="@string/send"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/error2"
+                android:gravity="start">
+                <Button
+                    android:id="@+id/send_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/roundedbutton"
+                    android:text="@string/send"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_margin="3dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+                <ImageButton
+                    android:id="@+id/browse_btn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/attach"
+                    android:layout_margin="3dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:contentDescription="TODO" />
+
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:gravity="center"
-            android:layout_below="@+id/send_btn"
-            android:textColor="@color/colorError" />
+            android:layout_height="@dimen/height_footer"
+            android:background="@drawable/footer"
+            android:layout_alignParentBottom="true"
+
+            />
+
+
 
     </RelativeLayout>
 

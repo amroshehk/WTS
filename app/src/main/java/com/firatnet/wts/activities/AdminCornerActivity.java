@@ -2,6 +2,7 @@ package com.firatnet.wts.activities;
 
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 
 import android.Manifest;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -37,6 +39,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firatnet.wts.BuildConfig;
 import com.firatnet.wts.R;
 
 import com.firatnet.wts.classes.GalleryUtil;
@@ -185,7 +188,17 @@ public class AdminCornerActivity extends BaseActivity {
 
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         i.setType("image/jpeg");
-        i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+file.getAbsolutePath())); //Your image file
+        Uri contentUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            contentUri = FileProvider.getUriForFile(AdminCornerActivity.this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
+            i.putExtra(Intent.EXTRA_STREAM, contentUri); //Your image file
+        } else {
+            i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+file.getAbsolutePath())); //Your image file
+        }
+
       //  i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //i.setType("message/rfc822");
 //        i.putExtra(Intent.EXTRA_STREAM, Uri.parse(picturePath));

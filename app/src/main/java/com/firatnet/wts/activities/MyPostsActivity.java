@@ -30,6 +30,7 @@ import com.firatnet.wts.adapter.RecyclerMyPostsCardAdapter;
 import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.classes.StaticMethod;
 import com.firatnet.wts.database.SafetyDbHelper;
+import com.firatnet.wts.entities.Category;
 import com.firatnet.wts.entities.Phone;
 import com.firatnet.wts.entities.Post;
 
@@ -41,16 +42,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.firatnet.wts.classes.JsonTAG.TAG_CATEGORY;
 import static com.firatnet.wts.classes.JsonTAG.TAG_CREATED_AT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
 import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO_URL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_POST_IMAGE_URL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_UPDATED_AT;
+import static com.firatnet.wts.classes.URLTAG.GET_CATEGORIES_URL;
 import static com.firatnet.wts.classes.URLTAG.GET_STUDENT_POStS_URL;
 
 public class MyPostsActivity extends AppCompatActivity {
@@ -64,7 +68,9 @@ public class MyPostsActivity extends AppCompatActivity {
     Context context;
     private static JSONArray postsJsonArray = null;
     boolean checkfirst = true;
-
+    boolean getcatfirst = true;
+    private static JSONArray JsonArray = null;
+    ArrayList<Category> categories ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +81,7 @@ public class MyPostsActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(context);
         helper = new PreferenceHelper(context);
         posts = new ArrayList<>();
+        categories = new ArrayList<>();
         if (StaticMethod.ConnectChecked(context)) {
             GetMYpOSTServer();
 
@@ -114,15 +121,21 @@ public class MyPostsActivity extends AppCompatActivity {
                             String description = obj.getString(TAG_DESCRIPTION);
                             String created_at = obj.getString(TAG_CREATED_AT);
                             String updated_at = obj.getString(TAG_UPDATED_AT);
+                            String category = obj.getString(TAG_CATEGORY);
+                            String post_image_url = obj.getString(TAG_POST_IMAGE_URL);
 
 
-                            Post post = new Post(id, title, description, created_at, updated_at);
+                            Post post = new Post(id, title, description, created_at, updated_at,post_image_url,category);
                             posts.add(post);
 
                         }
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new RecyclerMyPostsCardAdapter(posts, context, nopost);
+                        adapter = new RecyclerMyPostsCardAdapter(posts, context, nopost,categories);
                         recyclerView.setAdapter(adapter);
+
+                        if(getcatfirst)
+                        { GetCategoriesServer();}
+
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
                         Toast.makeText(getApplicationContext(), "This student doesn't have any posts 1", Toast.LENGTH_SHORT).show();
@@ -169,6 +182,92 @@ public class MyPostsActivity extends AppCompatActivity {
 //                params.put(TAG_ID, id);
 //                return params;
 //            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+//        requestQueue.getCache().clear();
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
+
+    }
+
+    private void GetCategoriesServer() {
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Waiting ... ");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        StringRequest request = new StringRequest(Request.Method.GET, GET_CATEGORIES_URL, new Response.Listener<String>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    progressDialog.dismiss();
+                    if (obj.getBoolean(TAG_SUCCESS)) {
+
+                        JsonArray = obj.getJSONArray(TAG_RESULTS);
+
+
+                        for (int i = 0; i < JsonArray.length(); i++) {
+
+                            obj = JsonArray.getJSONObject(i);
+                            int id = Integer.parseInt(obj.getString(TAG_ID));
+                            String category_name = obj.getString(TAG_CATEGORY);
+                            String created_at = obj.getString(TAG_CREATED_AT);
+                            String updated_at = obj.getString(TAG_UPDATED_AT);
+
+
+                            Category category = new Category(id, category_name, created_at,updated_at);
+                            categories.add(category);
+
+
+                        }
+                        getcatfirst=false;
+                    } else if (!obj.getBoolean(TAG_ERROR)) {
+                        Toast.makeText(getApplicationContext(), "Threr isn't any Category", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Threr isn't any Category", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                    // Toast.makeText(getApplicationContext(), "error JSONException", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                String message = "";
+                if (volleyError instanceof NetworkError) {
+                    message = "Cannot connect to Internet...Please check your connection!";
+                } else if (volleyError instanceof ServerError) {
+                    message = "The email is not found, please register!";
+                } else if (volleyError instanceof AuthFailureError) {
+                    message = "Cannot connect to Internet...Please check your connection!";
+                } else if (volleyError instanceof ParseError) {
+                    message = "Parsing error! Please try again after some time!!";
+                } else if (volleyError instanceof TimeoutError) {
+                    message = "Connection TimeOut! Please check your internet connection.";
+                }
+                Log.i("TAGvLogin", message);
+//                    String responseBody = new String(volleyError.networkResponse.data, "utf-8");
+//                    JSONObject jsonObject = new JSONObject(responseBody);
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "This student doesn't have any Category", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+        ) {
+
         };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 //        requestQueue.getCache().clear();

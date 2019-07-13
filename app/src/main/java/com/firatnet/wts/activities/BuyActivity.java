@@ -7,8 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +34,7 @@ import com.firatnet.wts.adapter.RecyclerAllPostsCardAdapter;
 import com.firatnet.wts.adapter.RecyclerMyPostsCardAdapter;
 import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.classes.StaticMethod;
+import com.firatnet.wts.entities.Category;
 import com.firatnet.wts.entities.Post;
 
 import org.json.JSONArray;
@@ -37,10 +43,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.firatnet.wts.classes.JsonTAG.TAG_CATEGORY;
 import static com.firatnet.wts.classes.JsonTAG.TAG_CREATED_AT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
+import static com.firatnet.wts.classes.JsonTAG.TAG_POST_IMAGE_URL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
@@ -54,27 +62,83 @@ public class BuyActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     public TextView nopost;
     ArrayList<Post> posts;
+    ArrayList<Post> posts_filtered;
     private ProgressDialog progressDialog;
     public PreferenceHelper helper;
     Context context;
     private static JSONArray postsJsonArray = null;
+    private Spinner category_sp;
     boolean checkfirst = true;
+    ArrayList<Category> categories ;
+    ArrayList<String> categories_list ;
+    ArrayAdapter<String> spiner_adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
         recyclerView = findViewById(R.id.recyclerview);
+        category_sp = findViewById(R.id.category_sp);
+
         recyclerView.setLayoutManager(layoutManager);
         context = this;
         layoutManager = new LinearLayoutManager(context);
         helper = new PreferenceHelper(context);
         posts = new ArrayList<>();
+        posts_filtered = new ArrayList<>();
+
+        Intent intent=getIntent();
+        categories=new ArrayList<>();
+        categories_list=new ArrayList<>();
+        categories=intent.getParcelableArrayListExtra("CATEGORIES");
+        categories_list.add("All");
+
+        for (int i=0;i<categories.size();i++)
+        {
+            categories_list.add(categories.get(i).getCategory());
+        }
+
+        spiner_adapter =new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, categories_list);
+        category_sp.setAdapter(spiner_adapter);
+
         if (StaticMethod.ConnectChecked(context)) {
             GetPOSTServer();
 
         } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
+        category_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String cat=categories_list.get(position);
+                if(cat.equals("All"))
+                {
+                    recyclerView.setLayoutManager(layoutManager);
+                    adapter = new RecyclerAllPostsCardAdapter(posts, context, nopost);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    posts_filtered = new ArrayList<>();
+                    for (int i=0;i<posts.size();i++)
+                    {
+                        if(posts.get(i).getCategory().equals(cat))
+                        {
+                            posts_filtered.add(posts.get(i));
+                        }
+                    }
+                    recyclerView.setLayoutManager(layoutManager);
+                    adapter = new RecyclerAllPostsCardAdapter(posts_filtered, context, nopost);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
     private void GetPOSTServer() {
 
@@ -105,9 +169,11 @@ public class BuyActivity extends AppCompatActivity {
                             String description = obj.getString(TAG_DESCRIPTION);
                             String created_at = obj.getString(TAG_CREATED_AT);
                             String updated_at = obj.getString(TAG_UPDATED_AT);
+                            String category = obj.getString(TAG_CATEGORY);
+                            String post_image_url = obj.getString(TAG_POST_IMAGE_URL);
 
 
-                            Post post = new Post(id, title, description, created_at, updated_at);
+                            Post post = new Post(id, title, description, created_at, updated_at,post_image_url,category);
                             posts.add(post);
 
                         }

@@ -26,5 +26,7 @@ public class URLTAG {
  public static final String SAVE_ID_PROOOF_URL ="http://safety.fhn-emarketing.com/api/save_id";
  public static final String GET_ID_PROOOF_URL ="http://safety.fhn-emarketing.com/api/get_id";
 
+ public static final String GET_CATEGORIES_URL ="http://safety.fhn-emarketing.com/api/get_categories";
+
 
 }

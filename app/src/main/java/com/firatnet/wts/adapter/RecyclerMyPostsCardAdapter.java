@@ -27,8 +27,12 @@ import com.firatnet.wts.activities.EditSellPostActivity;
 import com.firatnet.wts.activities.PostDetailsActivity;
 import com.firatnet.wts.classes.StaticMethod;
 import com.firatnet.wts.database.SafetyDbHelper;
+import com.firatnet.wts.entities.Category;
 import com.firatnet.wts.entities.Phone;
 import com.firatnet.wts.entities.Post;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,13 +56,25 @@ import static com.firatnet.wts.classes.URLTAG.EDIT_POSt_URL;
 public class RecyclerMyPostsCardAdapter extends RecyclerView.Adapter<RecyclerMyPostsCardAdapter.ViewHolder> {
 
     private ArrayList<Post> posts;
+    private ArrayList<Category> categories;
     private Context context;
     private TextView nonumbers;
 
-    public RecyclerMyPostsCardAdapter(ArrayList<Post> posts, Context context, TextView nonumbers) {
+    ImageLoader imageLoader = ImageLoader.getInstance();
+    ImageLoaderConfiguration config;
+    DisplayImageOptions options;
+    public RecyclerMyPostsCardAdapter(ArrayList<Post> posts, Context context, TextView nonumbers,ArrayList categories) {
         this.posts = posts;
         this.context=context;
         this.nonumbers=nonumbers;
+        this.categories=categories;
+        config= new ImageLoaderConfiguration.Builder(context)
+                .build();
+        ImageLoader.getInstance().init(config);
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
 
     }
 
@@ -77,6 +93,15 @@ public class RecyclerMyPostsCardAdapter extends RecyclerView.Adapter<RecyclerMyP
 
                 holder.number_tv.setText(posts.get(position).getTitle());
                 holder.created_tv.setText(posts.get(position).getCreated_date());
+            if (!posts.get(position).getPost_image_url().isEmpty()&& !posts.get(position).getPost_image_url().equals("null"))
+                {
+                    imageLoader.displayImage(posts.get(position).getPost_image_url(), holder.image, options);
+                    holder.image.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    holder.image.setVisibility(View.GONE);
+                }
 
                }
 
@@ -105,7 +130,7 @@ public class RecyclerMyPostsCardAdapter extends RecyclerView.Adapter<RecyclerMyP
             Button cancel;
             Button ensure;
             TextView item_name;
-
+            ImageView image;
             @SuppressLint("SetTextI18n")
             ViewHolder(final View itemView)
             {
@@ -114,6 +139,7 @@ public class RecyclerMyPostsCardAdapter extends RecyclerView.Adapter<RecyclerMyP
                 created_tv=itemView.findViewById(R.id.created_date_tv);
                 delete=itemView.findViewById(R.id.deleterow);
                 edit=itemView.findViewById(R.id.editrow);
+                image = itemView.findViewById(R.id.image);
 
                 dialog2 = new Dialog(context);
                 Objects.requireNonNull(dialog2.getWindow()).requestFeature(Window.FEATURE_NO_TITLE);
@@ -175,6 +201,7 @@ public class RecyclerMyPostsCardAdapter extends RecyclerView.Adapter<RecyclerMyP
                         int position=getAdapterPosition();
                         Intent intent=new Intent(context, EditSellPostActivity.class);
                         intent.putExtra("EDIT",posts.get(position));
+                        intent.putExtra("CATEGORIES",categories);
                         context.startActivity(intent);
 
 

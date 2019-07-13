@@ -36,6 +36,8 @@ public class JsonTAG {
 
     public static final String TAG_CREATED_AT= "created_at";
     public static final String TAG_UPDATED_AT= "updated_at";
+    public static final String TAG_CATEGORY= "category";
+    public static final String TAG_POST_IMAGE_URL= "post_image_url";
 
 
 }

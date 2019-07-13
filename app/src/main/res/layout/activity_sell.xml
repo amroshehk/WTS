@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".activities.HelpActivity">
+    tools:context=".activities.SellActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,17 +29,45 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="80dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         >
-
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/no_image"
+            android:contentDescription="TODO" />
+        <LinearLayout
+            android:id="@+id/select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/customborder2">
+            <Spinner
+                android:id="@+id/category_sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/title_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+        android:layout_below="@+id/select"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:textColor="@color/colorAccent"
@@ -78,7 +106,7 @@
             android:background="@drawable/roundedbutton"
             android:layout_below="@+id/description_et"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/white"
             android:fontFamily="@font/roboto_bold"
             android:textSize="15sp"
@@ -88,10 +116,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/add_btn"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:textColor="@color/colorError" />
     </RelativeLayout>
-
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

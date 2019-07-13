@@ -26,6 +26,7 @@
                 android:text="@string/buy"
                 android:gravity="center"
                 android:textColor="@color/white"/>
+
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -33,10 +34,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <LinearLayout
+            android:id="@+id/select"
+            android:layout_marginTop="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/customborder2">
+            <Spinner
+                android:id="@+id/category_sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+
+
+                />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:padding="10dp"
-            android:layout_marginTop="80dp"
+            android:layout_below="@+id/select"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

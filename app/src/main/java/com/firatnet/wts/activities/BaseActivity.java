@@ -46,6 +46,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wts.classes.URLTAG.LOGOUT_URL;
 
 
@@ -307,7 +308,7 @@ public class BaseActivity extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     progressDialog.dismiss();
-                    if (obj.getBoolean("success")) {
+                    if (obj.getBoolean(TAG_SUCCESS)) {
 
 
                         FirebaseAuth.getInstance().signOut();//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -316,7 +317,7 @@ public class BaseActivity extends AppCompatActivity {
                         helper.setLoginState(false);
                         helper.deleteUser();
 
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+          //              Toast.makeText(getBaseContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -324,7 +325,7 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(intent);
 
                     } else  {
-                        //Toast.makeText(getApplicationContext(), "User logged out Not successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "User logged out Not successfully", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {

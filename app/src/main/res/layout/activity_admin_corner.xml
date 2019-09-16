@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,7 +40,7 @@
             android:layout_height="110dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/message_box"
+            android:background="@drawable/advertisement_corner"
             android:contentDescription="@string/todo" />
 
         <RelativeLayout
@@ -68,7 +67,8 @@
                 android:layout_below="@+id/new_mess"
                 android:background="@drawable/customborder2"
                 android:layout_margin="3dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -82,15 +82,13 @@
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/feedbackselect"
-
                     />
             </LinearLayout>
             <EditText
                 android:id="@+id/title_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/select"
+                android:layout_below="@+id/new_mess"
                 android:layout_margin="3dp"
                 android:hint="@string/title"
                 android:inputType="textMultiLine|text"
@@ -157,7 +155,14 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="@string/todo" />
+                <TextView
+                    android:id="@+id/file_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorAccentDark2" />
 
 
 
@@ -177,7 +182,7 @@
             android:background="@drawable/footer"
             android:layout_alignParentBottom="true"
 
-            />
+            android:contentDescription="@string/todo" />
 
 
 

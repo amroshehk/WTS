@@ -19,7 +19,7 @@
     <string name="not_having_account">Not Having an Account?</string>
     <string name="sign_up">Sign Up</string>
     <string name="logout">Log out</string>
-    <string name="new_to_wts">New to WST?</string>
+    <string name="new_to_wts">New user</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -78,12 +78,19 @@
     <string name="i_sent_you_a_code">I sent you a code, it will be detected automatically but if it is not detected you can put it below manually as well</string>
     <string name="wait_for_the_code">Wait for the code I sent you...</string>
     <string name="ag">2019</string>
-    <string name="terms_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="terms_condition"><![CDATA[> Terms & Condition]]></string>
+    <string name="terms_condition_t"><![CDATA[ Terms & Condition]]></string>
     <string name="designation">Designation</string>
     <string name="correspondence_address">Correspondence Address</string>
     <string name="hosteler">Hosteler</string>
     <string name="submit">Submit</string>
     <string name="Category">category</string>
+    <string name="contact_no">Contact no</string>
+    <string name="price">Price</string>
+    <string name="loading">Loading</string>
+    <string name="privacy_policy"><![CDATA[> Privacy Policy ]]></string>
+    <string name="privacy_policy_t"><![CDATA[ Privacy Policy ]]></string>
+    <string name="forgot_password">Forgot password</string>
     <array name="feedbackselect">
         <item>Select</item>
         <item>App performance</item>

@@ -127,9 +127,9 @@ public class BuyOrSellActivity extends BaseActivity {
                         }
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
-                        Toast.makeText(getApplicationContext(), "Threr isn't any Category", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There isn't any Category", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Threr isn't any Category", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There isn't any Category", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {

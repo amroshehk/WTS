@@ -64,16 +64,18 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.firatnet.wts.classes.JsonTAG.TAG_CATEGORY;
+import static com.firatnet.wts.classes.JsonTAG.TAG_CONTACT_NO;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
 import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO;
 import static com.firatnet.wts.classes.JsonTAG.TAG_POST_IMAGE_URL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_PRICE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
 import static com.firatnet.wts.classes.URLTAG.ADD_POSt_URL;
 
 public class SellActivity extends AppCompatActivity {
-    EditText title_et, description_et;
+    EditText title_et, description_et,contact_no_et,price_et;
     TextView error2;
     Button add_btn;
     private ProgressDialog progressDialog;
@@ -97,6 +99,8 @@ Context context;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
         title_et = findViewById(R.id.title_et);
+        contact_no_et = findViewById(R.id.contact_no_et);
+        price_et = findViewById(R.id.price_et);
         description_et = findViewById(R.id.description_et);
         add_btn = findViewById(R.id.add_btn);
         error2 = findViewById(R.id.error2);
@@ -135,6 +139,8 @@ Context context;
                 String title_= Objects.requireNonNull(title_et.getText()).toString();
                 String description_= Objects.requireNonNull(description_et.getText()).toString();
                 String category_= Objects.requireNonNull(category_sp.getSelectedItem()).toString();
+                String price_= Objects.requireNonNull(price_et.getText()).toString();
+                String contact_no_= Objects.requireNonNull(contact_no_et.getText()).toString();
                 String error_m="";
                 if(title_.equals("") || description_.equals(""))
                 {
@@ -151,7 +157,7 @@ Context context;
                     if (StaticMethod.ConnectChecked(context))
                     {
 
-                        final Post Post =new Post(title_,description_,category_);
+                        final Post Post =new Post(title_,price_,contact_no_,description_,category_);
                         AddNewPostServer(Post);
 
 
@@ -410,6 +416,8 @@ Context context;
                 params.put(TAG_TITLE, post.getTitle());
                 params.put(TAG_DESCRIPTION, post.getDescription());
                 params.put(TAG_CATEGORY, post.getCategory());
+                params.put(TAG_PRICE, post.getPrice());
+                params.put(TAG_CONTACT_NO, post.getContact_no());
 
 
                 return params;

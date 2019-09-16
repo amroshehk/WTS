@@ -11,7 +11,7 @@
     tools:context=".activities.LoginActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
@@ -120,32 +120,49 @@
         android:textColor="@color/white"
         android:textSize="19sp" />
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/new_to_wts"
-        android:textColor="@color/white"
-        android:fontFamily="@font/roboto_thin"
-        android:textSize="24sp" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:gravity="center">
 
     <Button
         android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/roundedbutton"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/roboto_thin"
+        android:textStyle="bold"
         android:padding="15dp"
-        android:fontFamily="@font/roboto_bold"
-        android:text="@string/sign_up"
+        android:text="@string/new_to_wts"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="17sp" />
+        android:textSize="20sp" />
+    <View
+        android:layout_width="2dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+    <Button
+        android:id="@+id/forot_pw_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/forgot_password"
+        android:textStyle="bold"
+        android:padding="15dp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
+
 
     <TextView
         android:id="@+id/error"
@@ -158,9 +175,20 @@
         android:layout_height="wrap_content"
         android:text="@string/terms_condition"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/timeless_normal"
         android:textSize="16sp"
         android:textColor="@color/gray_bg" />
+        <TextView
+            android:id="@+id/privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_policy"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/timeless_normal"
+            android:textSize="16sp"
+            android:textColor="@color/gray_bg" />
 
     </LinearLayout>
 </ScrollView>

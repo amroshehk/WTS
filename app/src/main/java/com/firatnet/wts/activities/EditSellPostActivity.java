@@ -60,17 +60,18 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.firatnet.wts.classes.JsonTAG.TAG_CATEGORY;
+import static com.firatnet.wts.classes.JsonTAG.TAG_CONTACT_NO;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
 import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_POST_IMAGE_URL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_PRICE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
-import static com.firatnet.wts.classes.URLTAG.ADD_POSt_URL;
 import static com.firatnet.wts.classes.URLTAG.EDIT_POSt_URL;
 
 public class EditSellPostActivity extends AppCompatActivity {
 
-    EditText title_et, description_et;
+    EditText title_et, description_et,contact_no_et,price_et;
     TextView error2;
     Button edit_btn;
     private ProgressDialog progressDialog;
@@ -95,6 +96,8 @@ public class EditSellPostActivity extends AppCompatActivity {
         Intent intent=getIntent();
         edit_post=intent.getParcelableExtra("EDIT");
         title_et = findViewById(R.id.title_et);
+        contact_no_et = findViewById(R.id.contact_no_et);
+        price_et = findViewById(R.id.price_et);
         description_et = findViewById(R.id.description_et);
         category_sp = findViewById(R.id.category_sp);
         pic = findViewById(R.id.image);
@@ -138,6 +141,8 @@ public class EditSellPostActivity extends AppCompatActivity {
 
 
 
+        price_et.setText(edit_post.getPrice());
+        contact_no_et.setText(edit_post.getContact_no());
         title_et.setText(edit_post.getTitle());
         description_et.setText(edit_post.getDescription());
         edit_btn.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +151,8 @@ public class EditSellPostActivity extends AppCompatActivity {
                 String title_= Objects.requireNonNull(title_et.getText()).toString();
                 String description_= Objects.requireNonNull(description_et.getText()).toString();
                 String category_= Objects.requireNonNull(category_sp.getSelectedItem()).toString();
+                String price_= Objects.requireNonNull(price_et.getText()).toString();
+                String contact_no_= Objects.requireNonNull(contact_no_et.getText()).toString();
                 String error_m="";
                 if(title_.equals("") || description_.equals(""))
                 {
@@ -161,6 +168,8 @@ public class EditSellPostActivity extends AppCompatActivity {
                         edit_post.setTitle(title_);
                         edit_post.setDescription(description_);
                         edit_post.setCategory(category_);
+                        edit_post.setPrice(price_);
+                        edit_post.setContact_no(contact_no_);
                        EditPostServer(edit_post);
 
 
@@ -426,6 +435,8 @@ public class EditSellPostActivity extends AppCompatActivity {
                 params.put(TAG_TITLE, post.getTitle());
                 params.put(TAG_DESCRIPTION, post.getDescription());
                 params.put(TAG_CATEGORY, post.getCategory());
+                params.put(TAG_PRICE, post.getPrice());
+                params.put(TAG_CONTACT_NO, post.getContact_no());
                 return params;
 
             }

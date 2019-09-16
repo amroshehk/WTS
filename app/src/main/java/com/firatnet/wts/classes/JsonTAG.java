@@ -39,5 +39,7 @@ public class JsonTAG {
     public static final String TAG_CATEGORY= "category";
     public static final String TAG_POST_IMAGE_URL= "post_image_url";
 
+    public static final String TAG_PRICE= "price";
+    public static final String TAG_CONTACT_NO= "contact_no";
 
 }

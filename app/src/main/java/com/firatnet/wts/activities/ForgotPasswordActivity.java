@@ -1,24 +1,20 @@
 package com.firatnet.wts.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -33,11 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firatnet.wts.R;
-import com.firatnet.wts.classes.PreferenceHelper;
 import com.firatnet.wts.classes.StaticMethod;
 import com.firatnet.wts.entities.Student;
-import com.firatnet.wts.phoneauth.PhoneNumberAuthActivity;
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.firatnet.wts.classes.JsonTAG.TAG_DATA;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DEPARTMENT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_EMAIL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
@@ -60,61 +52,28 @@ import static com.firatnet.wts.classes.JsonTAG.TAG_PHONE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO_URL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUBJECT;
+import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wts.classes.URLTAG.LOGIN_URL;
 
-public class LoginActivity extends AppCompatActivity {
-
-    private TextInputEditText email_et, pw_signin_et;
-    public Button btnSignin,forot_pw_btn;
+public class ForgotPasswordActivity extends AppCompatActivity {
     private TextView error,tandc,privacy;
-    private Context context;
+    private EditText email_et;
+    private Button send_btn;
     private ProgressDialog progressDialog;
-  //  private static JSONArray jsonArray = null;
-    public String email, password;
-    //String token;
-
-    public PreferenceHelper helper;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        helper = new PreferenceHelper(getApplicationContext());
-
-        if (helper.getLoginState().equals("1")){
-            Intent home = new Intent(getBaseContext(), MainActivity.class);
-            home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(home);
-        }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        context=this;
-        email_et = findViewById(R.id.email_et);
-        pw_signin_et = findViewById(R.id.pw_signin_et);
-        pw_signin_et.setTransformationMethod(new PasswordTransformationMethod());
-
-        Typeface typeface= ResourcesCompat.getFont(context,  R.font.roboto_thin);
-        pw_signin_et.setTypeface(typeface);
-
-        btnSignin = findViewById(R.id.btnSignin);
-        forot_pw_btn = findViewById(R.id.forot_pw_btn);
-        error = findViewById(R.id.error);
+        setContentView(R.layout.activity_forgot_password);
         tandc = findViewById(R.id.tandc);
         privacy = findViewById(R.id.privacy);
-        context = this;
-
-        try {
-            email = getIntent().getStringExtra("email");
-            password = getIntent().getStringExtra("password");
-            email_et.setText(email);
-            pw_signin_et.setText(password);
-        } catch (Exception ignored) {
-
-        }
+        email_et = findViewById(R.id.email_et);
+        send_btn = findViewById(R.id.send_btn);
+        context=this;
         tandc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, TermsConditionActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, TermsConditionActivity.class);
                 intent.putExtra("URL","https://ivyn.in/app/terms_and_conditions.html");
                 intent.putExtra("TCorPP","2");
                 startActivity(intent);
@@ -124,58 +83,30 @@ public class LoginActivity extends AppCompatActivity {
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, TermsConditionActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, TermsConditionActivity.class);
                 intent.putExtra("URL","https://ivyn.in/app/privacy_policy.html");
                 intent.putExtra("TCorPP","1");
                 startActivity(intent);
 
             }
         });
-
-        btnSignin.setOnClickListener(new View.OnClickListener() {
+        send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
                 final String email = Objects.requireNonNull(email_et.getText()).toString();
-                final String pw = Objects.requireNonNull(pw_signin_et.getText()).toString();
-
                 if (isInputsValid()) {
-                    if (StaticMethod.ConnectChecked(context)) {
+                if (StaticMethod.ConnectChecked(context)) {
 
 
-//                        token = SharedPrefManager.getInstance(context).getDeviceToken();
-//                        String msg = getString(R.string.msg_token_fmt, token);
-//                        Log.d("Login Tokrn", msg);
+                    resetPasswordServer(email);
 
-                      LoginServer(email, pw);
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
-
+            }
             }
         });
-        forot_pw_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        findViewById(R.id.signup).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signup = new Intent(getBaseContext(), PhoneNumberAuthActivity.class);
-                startActivity(signup);
-            }
-        });
-
     }
-
-
     private boolean isInputsValid() {
 
         if ( !isValidEmail(Objects.requireNonNull(email_et.getText()).toString())) {
@@ -184,31 +115,17 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
 
-        else if ( !isPasswordValid(Objects.requireNonNull(pw_signin_et.getText()).toString()) ) {
-
-            pw_signin_et.setError("Please enter password");
-            return false;
-        }
-
         return true;
 
-    }
-
-
-    public boolean isPasswordValid(String target) {
-//        return Pattern.matches("^(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,16}$", target);
-        return !target.isEmpty();
     }
 
     public boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
-
-
-    private void LoginServer(final String email, final String pw) {
+    private void resetPasswordServer(final String email ) {
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Login ... ");
+        progressDialog.setMessage("waiting ... ");
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -222,37 +139,19 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     progressDialog.dismiss();
-                    if (obj.getString(TAG_MESSAGE).equals("Student logged in successfully")) {
+                    if (obj.getBoolean(TAG_SUCCESS)) {
 
+                        Toast.makeText(getApplicationContext(),"you are receive your password on email", Toast.LENGTH_LONG).show();
 
-                        obj = obj.getJSONObject(TAG_RESULTS);
-                        String id = obj.getString(TAG_ID);
-                        String name = obj.getString(TAG_NAME);
-                        String email = obj.getString(TAG_EMAIL);
-                        String phone = obj.getString(TAG_PHONE);
-                        String photo_url = obj.getString(TAG_PHOTO_URL);
-                        String faculty = obj.getString(TAG_FACULTY);
-                        String department = obj.getString(TAG_DEPARTMENT);
-                        String subject = obj.getString(TAG_SUBJECT);
-                        String level = obj.getString(TAG_LEVEL);
-
-
-                        Student student =new Student(id,name,email,phone,photo_url,faculty,department,subject,level);
-
-                        helper.setLoginState(true);
-                        helper.saveUser(student);
-
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
 
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
-                        Toast.makeText(getApplicationContext(),"Incorrect email or password", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"Incorrect email or password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Your Email not found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Email not found", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -282,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    String responseBody = new String(volleyError.networkResponse.data, "utf-8");
 //                    JSONObject jsonObject = new JSONObject(responseBody);
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(),"Incorrect email or password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Your Email not found", Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -292,7 +191,6 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json; charset=utf-8");
                 params.put(TAG_EMAIL, email);
-                params.put(TAG_PASSWORD, pw);
                 return params;
             }
         };

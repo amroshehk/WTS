@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.firatnet.wts.classes.JsonTAG.TAG_CATEGORY;
+import static com.firatnet.wts.classes.JsonTAG.TAG_CONTACT_NO;
 import static com.firatnet.wts.classes.JsonTAG.TAG_CREATED_AT;
 import static com.firatnet.wts.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wts.classes.JsonTAG.TAG_ERROR;
@@ -50,6 +51,7 @@ import static com.firatnet.wts.classes.JsonTAG.TAG_ID;
 import static com.firatnet.wts.classes.JsonTAG.TAG_MESSAGE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_PHOTO_URL;
 import static com.firatnet.wts.classes.JsonTAG.TAG_POST_IMAGE_URL;
+import static com.firatnet.wts.classes.JsonTAG.TAG_PRICE;
 import static com.firatnet.wts.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wts.classes.JsonTAG.TAG_TITLE;
@@ -122,10 +124,12 @@ public class MyPostsActivity extends AppCompatActivity {
                             String created_at = obj.getString(TAG_CREATED_AT);
                             String updated_at = obj.getString(TAG_UPDATED_AT);
                             String category = obj.getString(TAG_CATEGORY);
+                            String price = obj.getString(TAG_PRICE);
+                            String contact_no = obj.getString(TAG_CONTACT_NO);
                             String post_image_url = obj.getString(TAG_POST_IMAGE_URL);
 
 
-                            Post post = new Post(id, title, description, created_at, updated_at,post_image_url,category);
+                            Post post = new Post(id, title,price,contact_no, description, created_at, updated_at,post_image_url,category);
                             posts.add(post);
 
                         }
@@ -230,9 +234,9 @@ public class MyPostsActivity extends AppCompatActivity {
                         }
                         getcatfirst=false;
                     } else if (!obj.getBoolean(TAG_ERROR)) {
-                        Toast.makeText(getApplicationContext(), "Threr isn't any Category", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There isn't any Category", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Threr isn't any Category", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There isn't any Category", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {

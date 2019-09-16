@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PostDetailsActivity extends AppCompatActivity {
 
-    TextView title_tv,desc_tv,created_date_tv,category_tv;
+    TextView title_tv,desc_tv,created_date_tv,category_tv,price_tv,contact_no_tv;
     ImageView image;
     ImageLoader imageLoader = ImageLoader.getInstance();
     ImageLoaderConfiguration config;
@@ -31,6 +31,8 @@ public class PostDetailsActivity extends AppCompatActivity {
         desc_tv=findViewById(R.id.desc_tv);
         created_date_tv=findViewById(R.id.created_date_tv);
         category_tv=findViewById(R.id.category_tv);
+        price_tv=findViewById(R.id.price_tv);
+        contact_no_tv=findViewById(R.id.contact_no_tv);
         image=findViewById(R.id.image);
         Intent intent=getIntent();
         Post post=intent.getParcelableExtra("DETAILS");
@@ -40,6 +42,8 @@ public class PostDetailsActivity extends AppCompatActivity {
         desc_tv.setText(post.getDescription());
         created_date_tv.setText(post.getCreated_date());
         category_tv.setText(post.getCategory());
+        price_tv.setText(post.getPrice());
+        contact_no_tv.setText(post.getContact_no());
 
         config = new ImageLoaderConfiguration.Builder(context)
                 .build();

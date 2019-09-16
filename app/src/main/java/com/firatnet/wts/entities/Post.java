@@ -6,11 +6,29 @@ import android.os.Parcelable;
 public class Post implements Parcelable {
     private int id;
     private String title;
+    private String price;
+    private String contact_no;
     private String description;
     private String created_date;
     private String updated_date;
     private String post_image_url;
     private String category;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getContact_no() {
+        return contact_no;
+    }
+
+    public void setContact_no(String contact_no) {
+        this.contact_no = contact_no;
+    }
 
     public Post(int id, String title, String description) {
         this.id = id;
@@ -19,6 +37,14 @@ public class Post implements Parcelable {
     }
     public Post( String title, String description,String category) {
         this.title = title;
+        this.description = description;
+        this.category = category;
+    }
+
+    public Post(String title, String price, String contact_no, String description, String category) {
+        this.title = title;
+        this.price = price;
+        this.contact_no = contact_no;
         this.description = description;
         this.category = category;
     }
@@ -35,6 +61,18 @@ public class Post implements Parcelable {
                 String post_image_url, String category) {
         this.id = id;
         this.title = title;
+        this.description = description;
+        this.created_date = created_date;
+        this.updated_date = updated_date;
+        this.post_image_url = post_image_url;
+        this.category = category;
+    }
+    public Post(int id, String title,String price, String contact_no, String description, String created_date, String updated_date,
+                String post_image_url, String category) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.contact_no = contact_no;
         this.description = description;
         this.created_date = created_date;
         this.updated_date = updated_date;
@@ -117,6 +155,8 @@ public class Post implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.title);
+        dest.writeString(this.price);
+        dest.writeString(this.contact_no);
         dest.writeString(this.description);
         dest.writeString(this.created_date);
         dest.writeString(this.updated_date);
@@ -127,6 +167,8 @@ public class Post implements Parcelable {
     protected Post(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
+        this.price = in.readString();
+        this.contact_no = in.readString();
         this.description = in.readString();
         this.created_date = in.readString();
         this.updated_date = in.readString();

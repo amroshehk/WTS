@@ -75,7 +75,7 @@ public class AdminCornerActivity extends BaseActivity {
     Spinner spinner;
     Button send_btn;
     ImageButton browse_btn;
-    TextView error2;
+    TextView error2,file_name;
     private final int GALLERY_ACTIVITY_CODE = 200;
     File file;
     ArrayList<Receiver> receivers;
@@ -98,6 +98,7 @@ public class AdminCornerActivity extends BaseActivity {
         send_btn = findViewById(R.id.send_btn);
         browse_btn = findViewById(R.id.browse_btn);
         error2 = findViewById(R.id.error2);
+        file_name = findViewById(R.id.file_name);
         context = this;
 
         receivers_list=new ArrayList<>();
@@ -113,10 +114,10 @@ public class AdminCornerActivity extends BaseActivity {
                 if (title.equals("") || message.equals("")) {
                     error_m = " Please Enter All Filed";
                 }
-                else if(spinner.getSelectedItemPosition()==0)
-                {
-                    error_m="Please select any item  _TO_";
-                }
+//                else if(spinner.getSelectedItemPosition()==0)
+//                {
+//                    error_m="Please select any item  _TO_";
+//                }
                 else if(file==null)
                 {
                     error_m="Please browse image";
@@ -125,7 +126,8 @@ public class AdminCornerActivity extends BaseActivity {
                 if (error_m.equals("")) {
                     if (StaticMethod.ConnectChecked(context)) {
 
-                        email_to =receivers.get(spinner.getSelectedItemPosition()-1).getEmail();
+                     //   email_to =receivers.get(spinner.getSelectedItemPosition()-1).getEmail();
+                        email_to ="pawantiwari598@gmail.com";
                         sendImage();
 
                     } else {
@@ -145,13 +147,13 @@ public class AdminCornerActivity extends BaseActivity {
             }
         });
 
-        if (StaticMethod.ConnectChecked(context)) {
-
-            GetMYpOSTServer();
-        } else {
-
-            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-        }
+//        if (StaticMethod.ConnectChecked(context)) {
+//
+//            GetMYpOSTServer();
+//        } else {
+//
+//            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+//        }
 
     }
     @Override
@@ -216,6 +218,7 @@ public class AdminCornerActivity extends BaseActivity {
                 String    picturePath = data.getStringExtra("picturePath");
                 //perform Crop on the Image Selected from Gallery
                 file = new File(picturePath);
+                file_name.setText(file.getName());
             }
               }
 }
@@ -268,9 +271,9 @@ public class AdminCornerActivity extends BaseActivity {
                          spinner.setAdapter(adapter);
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
-                        Toast.makeText(getApplicationContext(), "Threr isn't any receivers", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There isn't any receivers", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Threr isn't any receivers", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There isn't any receivers", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {

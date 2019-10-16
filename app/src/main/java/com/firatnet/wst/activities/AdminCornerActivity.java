@@ -127,7 +127,7 @@ public class AdminCornerActivity extends BaseActivity {
                     if (StaticMethod.ConnectChecked(context)) {
 
                      //   email_to =receivers.get(spinner.getSelectedItemPosition()-1).getEmail();
-                        email_to ="pawantiwari598@gmail.com";
+                        email_to ="wstbhu@gmail.com";
                         sendImage();
 
                     } else {

@@ -45,6 +45,7 @@ import com.android.volley.toolbox.Volley;
 
 import com.firatnet.wst.BuildConfig;
 import com.firatnet.wst.classes.GalleryUtil;
+import com.firatnet.wst.classes.PreferenceHelper;
 import com.firatnet.wst.classes.ProcessProfilePhotoTask;
 import com.firatnet.wst.classes.StaticMethod;
 import com.firatnet.wst.classes.VolleyMultipartRequest;
@@ -106,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
     private final int GALLERY_ACTIVITY_CODE = 200;
     private final int RESULT_CROP = 400;
     private static final String TEMP_PHOTO_FILE = "tempPhoto.jpg";
-
+    PreferenceHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -137,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         context = this;
-
+        helper = new PreferenceHelper(context);
         //get intent Extra
         phonenumber = getIntent().getStringExtra("phonenumber");
         //counterName = getIntent().getStringExtra("counterName");
@@ -166,9 +167,10 @@ public class RegisterActivity extends AppCompatActivity {
                     error_m = "Please enter valid email";
                 } else if (!pw.equals(conf_pw)) {
                     error_m = "Password does not match Confirm Password";
-                } else if (select_id_proof_list.getSelectedItemPosition() == 0) {
-                    error_m = "Please select identity proof";
                 }
+//                else if (select_id_proof_list.getSelectedItemPosition() == 0) {
+//                    error_m = "Please select identity proof";
+//                }
                 error2.setText(error_m);
                 if (error_m.equals("")) {
 
@@ -181,7 +183,10 @@ public class RegisterActivity extends AppCompatActivity {
                         student.setFaculty(faculty);
                         student.setSubject(subject);
                         student.setDesignation(designation);
+                        if (select_id_proof_list.getSelectedItemPosition() != 0)
                         student.setId_proof_list(id_proof_list);
+                        else
+                        student.setId_proof_list("");
 
 
                         //  token = SharedPrefManager.getInstance(context).getDeviceToken();
@@ -201,10 +206,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        bitmap_idproof_image = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.camera);
-        bitmap_your_photo = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.camera);
+//        bitmap_idproof_image = BitmapFactory.decodeResource(context.getResources(),
+//                R.drawable.camera);
+//        bitmap_your_photo = BitmapFactory.decodeResource(context.getResources(),
+//                R.drawable.camera);
 
         idproof_photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -417,8 +422,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (obj.getString(TAG_MESSAGE).equals("The student successfully registered")) {
 
-                        obj = obj.getJSONObject(TAG_RESULTS);
-                        String id = obj.getString(TAG_ID);
+                        JSONObject obj2 = obj.getJSONObject(TAG_RESULTS);
+                        String id = obj2.getString(TAG_ID);
 
                         student.setId(id);
                         Toast.makeText(getApplicationContext(), obj.getString(TAG_MESSAGE), Toast.LENGTH_SHORT).show();
@@ -605,6 +610,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     void goToLogin(Student student) {
+        helper.setLoginState(true);
+        helper.saveUser(student);
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         intent.putExtra("email", student.getEmail());
         intent.putExtra("password", student.getPassword());

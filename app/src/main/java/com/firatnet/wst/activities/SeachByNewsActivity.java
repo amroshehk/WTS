@@ -1,18 +1,17 @@
 package com.firatnet.wst.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,118 +29,90 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firatnet.wst.R;
-import com.firatnet.wst.adapter.RecyclerAllPostsCardAdapter;
+import com.firatnet.wst.adapter.RecyclerAllNewsCardAdapter;
 import com.firatnet.wst.classes.PreferenceHelper;
 import com.firatnet.wst.classes.StaticMethod;
 import com.firatnet.wst.entities.Category;
-import com.firatnet.wst.entities.Post;
+import com.firatnet.wst.entities.News;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import static com.firatnet.wst.classes.JsonTAG.TAG_CATEGORY;
-import static com.firatnet.wst.classes.JsonTAG.TAG_CONTACT_NO;
+import static com.firatnet.wst.classes.JsonTAG.TAG_CATEGORY_ID;
+import static com.firatnet.wst.classes.JsonTAG.TAG_CONTENT;
 import static com.firatnet.wst.classes.JsonTAG.TAG_CREATED_AT;
-import static com.firatnet.wst.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wst.classes.JsonTAG.TAG_ERROR;
 import static com.firatnet.wst.classes.JsonTAG.TAG_ID;
-import static com.firatnet.wst.classes.JsonTAG.TAG_POST_IMAGE_URL;
-import static com.firatnet.wst.classes.JsonTAG.TAG_PRICE;
+import static com.firatnet.wst.classes.JsonTAG.TAG_KEYWORDS;
+import static com.firatnet.wst.classes.JsonTAG.TAG_PIC_URL;
 import static com.firatnet.wst.classes.JsonTAG.TAG_RESULTS;
 import static com.firatnet.wst.classes.JsonTAG.TAG_SUCCESS;
-import static com.firatnet.wst.classes.JsonTAG.TAG_TITLE;
 import static com.firatnet.wst.classes.JsonTAG.TAG_UPDATED_AT;
-import static com.firatnet.wst.classes.URLTAG.GET_ALL_POStS_URL;
+import static com.firatnet.wst.classes.URLTAG.GET_NEWS_URL;
+import static com.firatnet.wst.classes.URLTAG.SEARCH_BY_NEWS_URL;
 
-public class BuyActivity extends AppCompatActivity {
+public class SeachByNewsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-    public TextView nopost;
-    ArrayList<Post> posts;
-    ArrayList<Post> posts_filtered;
+    public TextView nonews;
+    ArrayList<News> news;
     private ProgressDialog progressDialog;
     public PreferenceHelper helper;
     Context context;
     private static JSONArray postsJsonArray = null;
-    private Spinner category_sp;
-    boolean checkfirst = true;
-    ArrayList<Category> categories ;
-    ArrayList<String> categories_list ;
-    ArrayAdapter<String> spiner_adapter;
+    private SearchView serach;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy);
+        setContentView(R.layout.activity_seach_by_news);
+
         recyclerView = findViewById(R.id.recyclerview);
-        category_sp = findViewById(R.id.category_sp);
-        nopost = findViewById(R.id.nopost);
+        serach = findViewById(R.id.serach);
+        nonews = findViewById(R.id.nonews);
 
         recyclerView.setLayoutManager(layoutManager);
         context = this;
         layoutManager = new LinearLayoutManager(context);
         helper = new PreferenceHelper(context);
-        posts = new ArrayList<>();
-        posts_filtered = new ArrayList<>();
+        news = new ArrayList<>();
 
-        Intent intent=getIntent();
-        categories=new ArrayList<>();
-        categories_list=new ArrayList<>();
-        categories=intent.getParcelableArrayListExtra("CATEGORIES");
-        categories_list.add("All");
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        serach.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        for (int i=0;i<categories.size();i++)
-        {
-            categories_list.add(categories.get(i).getCategory());
-        }
+        serach.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-        spiner_adapter =new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, categories_list);
-        category_sp.setAdapter(spiner_adapter);
-
-        if (StaticMethod.ConnectChecked(context)) {
-            GetPOSTServer();
-
-        } else {
-            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-        }
-        category_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cat=categories_list.get(position);
-                if(cat.equals("All"))
-                {
-                    recyclerView.setLayoutManager(layoutManager);
-                    adapter = new RecyclerAllPostsCardAdapter(posts, context, nopost);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+            public boolean onQueryTextSubmit(String query) {
+                if (StaticMethod.ConnectChecked(context)) {
+                    clear();
+                    nonews.setVisibility(View.GONE);
+//                    progressDialog.dismiss();
+                    GetNewsServer(query);
+                    return false;
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    posts_filtered = new ArrayList<>();
-                    for (int i=0;i<posts.size();i++)
-                    {
-                        if(posts.get(i).getCategory().equals(cat))
-                        {
-                            posts_filtered.add(posts.get(i));
-                        }
-                    }
-                    recyclerView.setLayoutManager(layoutManager);
-                    adapter = new RecyclerAllPostsCardAdapter(posts_filtered, context, nopost);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
+                return false;
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
+
     }
-    private void GetPOSTServer() {
+    private void GetNewsServer(final String query) {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Waiting ... ");
@@ -149,7 +120,7 @@ public class BuyActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        StringRequest request = new StringRequest(Request.Method.GET, GET_ALL_POStS_URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, SEARCH_BY_NEWS_URL, new Response.Listener<String>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(String response) {
@@ -166,28 +137,26 @@ public class BuyActivity extends AppCompatActivity {
 
                             obj = postsJsonArray.getJSONObject(i);
                             int id = Integer.parseInt(obj.getString(TAG_ID));
-                            String title = obj.getString(TAG_TITLE);
-                            String description = obj.getString(TAG_DESCRIPTION);
+                            String content = obj.getString(TAG_CONTENT);
+                            String pic_url = obj.getString(TAG_PIC_URL);
                             String created_at = obj.getString(TAG_CREATED_AT);
                             String updated_at = obj.getString(TAG_UPDATED_AT);
-                            String category = obj.getString(TAG_CATEGORY);
-                            String price = obj.getString(TAG_PRICE);
-                            String contact_no = obj.getString(TAG_CONTACT_NO);
-                            String post_image_url = obj.getString(TAG_POST_IMAGE_URL);
+                            String category_id = obj.getString(TAG_CATEGORY_ID);
 
 
-                            Post post = new Post(id, title,price,contact_no, description, created_at, updated_at,post_image_url,category);
-                            posts.add(post);
+
+                            News news_o = new News(id, category_id,content,pic_url, created_at, updated_at);
+                            news.add(news_o);
 
                         }
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new RecyclerAllPostsCardAdapter(posts, context, nopost);
+                        adapter = new RecyclerAllNewsCardAdapter(news, context, nonews);
                         recyclerView.setAdapter(adapter);
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
-                        Toast.makeText(getApplicationContext(), "This student doesn't have any posts 1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "This student doesn't have any news", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "This student doesn't have any posts 2", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "This student doesn't have any news", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -217,18 +186,18 @@ public class BuyActivity extends AppCompatActivity {
 //                    String responseBody = new String(volleyError.networkResponse.data, "utf-8");
 //                    JSONObject jsonObject = new JSONObject(responseBody);
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "This student doesn't have any posts 3", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "This student doesn't have any news", Toast.LENGTH_SHORT).show();
 
             }
         }
         ) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put(TAG_ID, id);
-//                return params;
-//            }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=utf-8");
+                params.put(TAG_KEYWORDS, query);
+                return params;
+            }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 //        requestQueue.getCache().clear();
@@ -238,5 +207,12 @@ public class BuyActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
 
+    }
+
+    public void clear() {
+        news.clear();
+        nonews.setVisibility(View.GONE);
+        adapter = new RecyclerAllNewsCardAdapter(news, context, nonews);
+        recyclerView.setAdapter(adapter);
     }
 }

@@ -8,9 +8,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
-        android:name="com.firatnet.wst.app.MyApplication"
+        android:name=".app.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher3"
@@ -20,15 +19,25 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.firatnet.wst.activities.ForgotPasswordActivity"
+        <activity android:name=".activities.SeachByNewsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name="com.firatnet.wst.activities.TermsConditionActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity android:name=".activities.GetNewNewsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.NewsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.SplashActivity"
+            android:name=".activities.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.TermsConditionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -38,76 +47,76 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.firatnet.wst.activities.AdminCornerActivity"
+            android:name=".activities.AdminCornerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.BuyActivity"
+            android:name=".activities.BuyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.ImagesViewerActivity"
+            android:name=".activities.ImagesViewerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.PostDetailsActivity"
+            android:name=".activities.PostDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.EditSellPostActivity"
+            android:name=".activities.EditSellPostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.MyPostsActivity"
+            android:name=".activities.MyPostsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.SettingActivity"
+            android:name=".activities.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.MyProfileActivity"
+            android:name=".activities.MyProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.FeedBackActivity"
+            android:name=".activities.FeedBackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.SellActivity"
+            android:name=".activities.SellActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.BuyOrSellActivity"
+            android:name=".activities.BuyOrSellActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.HelpActivity"
+            android:name=".activities.HelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.phoneauth.VerifyPhoneActivity"
+            android:name=".phoneauth.VerifyPhoneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.phoneauth.PhoneNumberAuthActivity"
+            android:name=".phoneauth.PhoneNumberAuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.firatnet.wst.classes.GalleryUtil"
+            android:name=".classes.GalleryUtil"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 

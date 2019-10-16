@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 public class MainActivity extends BaseActivity {
 
 
-    public LinearLayout help_line1, buysell_line2, admin_line3;
+    public LinearLayout help_line1, buysell_line2, admin_line3,news_line4;
     public PreferenceHelper helper;
     private Context context;
     @Override
@@ -32,33 +32,35 @@ public class MainActivity extends BaseActivity {
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            String email1 = getIntent().getStringExtra("email");
-            String password1 = getIntent().getStringExtra("password");
-            String phone = getIntent().getStringExtra("phone");
-            String name = getIntent().getStringExtra("name");
-
-            Student student = new Student();
-            student.setEmail(email1);
-            student.setPassword(password1);
-            student.setPhone(phone);
-            student.setName(name);
-
-            helper.setLoginState(true);
-            helper.saveUser(student);
-
-        } catch (Exception ignored) {
-
-        }
+        context=this;
+//        //setSupportActionBar(toolbar);
+//        helper = new PreferenceHelper(context);
+//        try {
+//            String email1 = getIntent().getStringExtra("email");
+//            String password1 = getIntent().getStringExtra("password");
+//            String phone = getIntent().getStringExtra("phone");
+//            String name = getIntent().getStringExtra("name");
+//
+//            Student student = new Student();
+//            student.setEmail(email1);
+//            student.setPassword(password1);
+//            student.setPhone(phone);
+//            student.setName(name);
+//
+//            helper.setLoginState(true);
+//            helper.saveUser(student);
+//
+//        } catch (Exception ignored) {
+//
+//        }
 
 
       // Toolbar toolbar = findViewById(R.id.toolbar);
         help_line1 = findViewById(R.id.help_line1);
         buysell_line2 = findViewById(R.id.buysell_line2);
         admin_line3 = findViewById(R.id.admin_line3);
-        //setSupportActionBar(toolbar);
-        helper = new PreferenceHelper(getApplicationContext());
+        news_line4 = findViewById(R.id.news_line4);
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +94,13 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
+        news_line4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

@@ -30,10 +30,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firatnet.wst.R;
+import com.firatnet.wst.adapter.RecyclerAllNewsCardAdapter;
 import com.firatnet.wst.adapter.RecyclerAllPostsCardAdapter;
 import com.firatnet.wst.classes.PreferenceHelper;
 import com.firatnet.wst.classes.StaticMethod;
 import com.firatnet.wst.entities.Category;
+import com.firatnet.wst.entities.News;
 import com.firatnet.wst.entities.Post;
 
 import org.json.JSONArray;
@@ -43,11 +45,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import static com.firatnet.wst.classes.JsonTAG.TAG_CATEGORY;
+import static com.firatnet.wst.classes.JsonTAG.TAG_CATEGORY_ID;
 import static com.firatnet.wst.classes.JsonTAG.TAG_CONTACT_NO;
+import static com.firatnet.wst.classes.JsonTAG.TAG_CONTENT;
 import static com.firatnet.wst.classes.JsonTAG.TAG_CREATED_AT;
 import static com.firatnet.wst.classes.JsonTAG.TAG_DESCRIPTION;
 import static com.firatnet.wst.classes.JsonTAG.TAG_ERROR;
 import static com.firatnet.wst.classes.JsonTAG.TAG_ID;
+import static com.firatnet.wst.classes.JsonTAG.TAG_PIC_URL;
 import static com.firatnet.wst.classes.JsonTAG.TAG_POST_IMAGE_URL;
 import static com.firatnet.wst.classes.JsonTAG.TAG_PRICE;
 import static com.firatnet.wst.classes.JsonTAG.TAG_RESULTS;
@@ -55,14 +60,15 @@ import static com.firatnet.wst.classes.JsonTAG.TAG_SUCCESS;
 import static com.firatnet.wst.classes.JsonTAG.TAG_TITLE;
 import static com.firatnet.wst.classes.JsonTAG.TAG_UPDATED_AT;
 import static com.firatnet.wst.classes.URLTAG.GET_ALL_POStS_URL;
+import static com.firatnet.wst.classes.URLTAG.GET_NEWS_URL;
 
-public class BuyActivity extends AppCompatActivity {
+public class GetNewNewsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-    public TextView nopost;
-    ArrayList<Post> posts;
-    ArrayList<Post> posts_filtered;
+    public TextView nonews;
+    ArrayList<News> news;
+    ArrayList<News> news_filtered;
     private ProgressDialog progressDialog;
     public PreferenceHelper helper;
     Context context;
@@ -71,38 +77,45 @@ public class BuyActivity extends AppCompatActivity {
     boolean checkfirst = true;
     ArrayList<Category> categories ;
     ArrayList<String> categories_list ;
+    ArrayList<String> categories_id_list ;
     ArrayAdapter<String> spiner_adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy);
+        setContentView(R.layout.activity_get_new_news);
         recyclerView = findViewById(R.id.recyclerview);
         category_sp = findViewById(R.id.category_sp);
-        nopost = findViewById(R.id.nopost);
+        nonews = findViewById(R.id.nonews);
 
         recyclerView.setLayoutManager(layoutManager);
         context = this;
         layoutManager = new LinearLayoutManager(context);
         helper = new PreferenceHelper(context);
-        posts = new ArrayList<>();
-        posts_filtered = new ArrayList<>();
+        news = new ArrayList<>();
+        news_filtered = new ArrayList<>();
 
         Intent intent=getIntent();
         categories=new ArrayList<>();
         categories_list=new ArrayList<>();
+        categories_id_list=new ArrayList<>();
         categories=intent.getParcelableArrayListExtra("CATEGORIES");
         categories_list.add("All");
+        categories_id_list.add("All");
 
         for (int i=0;i<categories.size();i++)
         {
             categories_list.add(categories.get(i).getCategory());
+        }
+        for (int i=0;i<categories.size();i++)
+        {
+            categories_id_list.add(String.valueOf(categories.get(i).getId()));
         }
 
         spiner_adapter =new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, categories_list);
         category_sp.setAdapter(spiner_adapter);
 
         if (StaticMethod.ConnectChecked(context)) {
-            GetPOSTServer();
+            GetNewsServer();
 
         } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -111,25 +124,26 @@ public class BuyActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String cat=categories_list.get(position);
+                String cat_id=categories_id_list.get(position);
                 if(cat.equals("All"))
                 {
                     recyclerView.setLayoutManager(layoutManager);
-                    adapter = new RecyclerAllPostsCardAdapter(posts, context, nopost);
+                    adapter = new RecyclerAllNewsCardAdapter(news, context, nonews);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
                 else
                 {
-                    posts_filtered = new ArrayList<>();
-                    for (int i=0;i<posts.size();i++)
+                    news_filtered = new ArrayList<>();
+                    for (int i=0;i<news.size();i++)
                     {
-                        if(posts.get(i).getCategory().equals(cat))
+                        if(news.get(i).getCategory_id().equals(cat_id))
                         {
-                            posts_filtered.add(posts.get(i));
+                            news_filtered.add(news.get(i));
                         }
                     }
                     recyclerView.setLayoutManager(layoutManager);
-                    adapter = new RecyclerAllPostsCardAdapter(posts_filtered, context, nopost);
+                    adapter = new RecyclerAllNewsCardAdapter(news_filtered, context, nonews);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -141,7 +155,7 @@ public class BuyActivity extends AppCompatActivity {
             }
         });
     }
-    private void GetPOSTServer() {
+    private void GetNewsServer() {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Waiting ... ");
@@ -149,7 +163,7 @@ public class BuyActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        StringRequest request = new StringRequest(Request.Method.GET, GET_ALL_POStS_URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, GET_NEWS_URL, new Response.Listener<String>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(String response) {
@@ -166,28 +180,26 @@ public class BuyActivity extends AppCompatActivity {
 
                             obj = postsJsonArray.getJSONObject(i);
                             int id = Integer.parseInt(obj.getString(TAG_ID));
-                            String title = obj.getString(TAG_TITLE);
-                            String description = obj.getString(TAG_DESCRIPTION);
+                            String content = obj.getString(TAG_CONTENT);
+                            String pic_url = obj.getString(TAG_PIC_URL);
                             String created_at = obj.getString(TAG_CREATED_AT);
                             String updated_at = obj.getString(TAG_UPDATED_AT);
-                            String category = obj.getString(TAG_CATEGORY);
-                            String price = obj.getString(TAG_PRICE);
-                            String contact_no = obj.getString(TAG_CONTACT_NO);
-                            String post_image_url = obj.getString(TAG_POST_IMAGE_URL);
+                            String category_id = obj.getString(TAG_CATEGORY_ID);
 
 
-                            Post post = new Post(id, title,price,contact_no, description, created_at, updated_at,post_image_url,category);
-                            posts.add(post);
+
+                            News news_o = new News(id, category_id,content,pic_url, created_at, updated_at);
+                            news.add(news_o);
 
                         }
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new RecyclerAllPostsCardAdapter(posts, context, nopost);
+                        adapter = new RecyclerAllNewsCardAdapter(news, context, nonews);
                         recyclerView.setAdapter(adapter);
 
                     } else if (!obj.getBoolean(TAG_ERROR)) {
-                        Toast.makeText(getApplicationContext(), "This student doesn't have any posts 1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "This student doesn't have any news", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "This student doesn't have any posts 2", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "This student doesn't have any news", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -217,7 +229,7 @@ public class BuyActivity extends AppCompatActivity {
 //                    String responseBody = new String(volleyError.networkResponse.data, "utf-8");
 //                    JSONObject jsonObject = new JSONObject(responseBody);
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "This student doesn't have any posts 3", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "This student doesn't have any news", Toast.LENGTH_SHORT).show();
 
             }
         }

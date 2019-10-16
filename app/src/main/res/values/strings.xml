@@ -45,13 +45,14 @@
     <string name="add">Add</string>
     <string name="message">Message</string>
     <string name="my_posts">My posts</string>
-    <string name="share_text">WTS App  is an app to Safe you .Market url: play.google.com/store/apps/details?id=com.firatnet.wts</string>
+    <string name="share_text">WTS App  is an app to Safe you .Market url: play.google.com/store/apps/details?id=</string>
     <string name="phoneno">Phone No.</string>
     <string name="enter_phone_list">Enter Phone List</string>
     <string name="enter_phone">Enter Phone Number</string>
     <string name="your_phones_list">Your Phones List</string>
     <string name="no_number">No number phone</string>
     <string name="no_post">No post</string>
+    <string name="no_news">No News</string>
     <string name="vr4u">VR4U</string>
     <string name="administator_corner">administator corner</string>
     <string name="no">NO</string>
@@ -91,6 +92,9 @@
     <string name="privacy_policy"><![CDATA[> Privacy Policy ]]></string>
     <string name="privacy_policy_t"><![CDATA[ Privacy Policy ]]></string>
     <string name="forgot_password">Forgot password</string>
+    <string name="new_news">new news</string>
+    <string name="search">search</string>
+    <string name="news">News</string>
     <array name="feedbackselect">
         <item>Select</item>
         <item>App performance</item>

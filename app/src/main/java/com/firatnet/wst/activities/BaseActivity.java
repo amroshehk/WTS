@@ -164,9 +164,10 @@ public class BaseActivity extends AppCompatActivity {
                     Intent intent = new Intent(BaseActivity.this, MyPostsActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.nav_share) {
+                    final String appPackageName = getPackageName();
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text)+appPackageName);
                     shareIntent.setType("text/plain");
                     startActivity(shareIntent);
                 } else if (id == R.id.nav_send) {
@@ -188,6 +189,7 @@ public class BaseActivity extends AppCompatActivity {
             }
         }*/
                 else if (id == R.id.nav_logout) {
+                    email= helper.getSettingValueEmail();
                     LogoutServer(email);
                 }
 
@@ -262,9 +264,10 @@ public class BaseActivity extends AppCompatActivity {
             Intent intent = new Intent(BaseActivity.this, MyPostsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
+            final String appPackageName = getPackageName();
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text)+appPackageName);
             shareIntent.setType("text/plain");
             startActivity(shareIntent);
         } else if (id == R.id.nav_send) {
@@ -286,6 +289,7 @@ public class BaseActivity extends AppCompatActivity {
             }
         }*/
         else if (id == R.id.nav_logout) {
+            email= helper.getSettingValueEmail();
             LogoutServer(email);
         }
         return super.onOptionsItemSelected(item);
@@ -360,8 +364,14 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json; charset=utf-8");
+               // params.put("Content-Type", "application/x-www-form-urlencoded");
                 params.put(TAG_EMAIL, email);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
